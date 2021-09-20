@@ -21,6 +21,8 @@ Furthermore:
 * Location coordinates can be copied to clipboard or opened in a maps app, if installed.
 * Clearing A-GPS aiding data is also supported.
 
+<b>Note</b> that My Location is not a location provider like UnifiedNLP (or microG GmsCore). It just shows the location information received from AOSP location providers (GPS and Network) or directly from UnifiedNLP Backends (whichever are available on the device).
+
 ## Screenshots
 
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.jpg" width="250"> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.jpg" width="250"> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.jpg" width="250">
