@@ -34,7 +34,7 @@ public class GpsSvc extends Service implements LocationListener, GpsStatus.Liste
 
   public static final String ACTION_STOP_SERVICE = APPLICATION_ID + ".action.STOP_SERVICE";
 
-  public static boolean mIsRunning = false;
+  static boolean mIsRunning = false;
 
   private final LocationManager mLocManager =
       (LocationManager) App.getCxt().getSystemService(Context.LOCATION_SERVICE);
@@ -69,7 +69,7 @@ public class GpsSvc extends Service implements LocationListener, GpsStatus.Liste
     super.onDestroy();
   }
 
-  private Location mGpsLoc;
+  static Location mGpsLoc;
 
   @Override
   public void onLocationChanged(Location location) {
@@ -98,6 +98,7 @@ public class GpsSvc extends Service implements LocationListener, GpsStatus.Liste
   private void stop() {
     mIsRunning = false;
     stopGpsLocListener();
+    mGpsLoc = null;
     if (mFuture != null) {
       mFuture.cancel(true);
     }
@@ -223,19 +224,20 @@ public class GpsSvc extends Service implements LocationListener, GpsStatus.Liste
       } else {
         sText = bText = getString(R.string.satellites_count, mTotalSats, mSatsStrongSig, mUsedSats);
         double lat, lng;
-        if (mGpsLoc != null
-            && (lat = mGpsLoc.getLatitude()) != 0
-            && (lng = mGpsLoc.getLongitude()) != 0) {
+        Location gpsLoc = mGpsLoc;
+        if (gpsLoc != null
+            && (lat = gpsLoc.getLatitude()) != 0
+            && (lng = gpsLoc.getLongitude()) != 0) {
           sText =
               getString(
                   R.string.location,
                   formatLatLng(lat),
                   formatLatLng(lng),
-                  formatLocAccuracy(mGpsLoc.getAccuracy()));
+                  formatLocAccuracy(gpsLoc.getAccuracy()));
           bText += "\n" + sText;
         }
-        if (mGpsLoc != null && mGpsLoc.getTime() != 0) {
-          when = mGpsLoc.getTime();
+        if (gpsLoc != null && gpsLoc.getTime() != 0) {
+          when = gpsLoc.getTime();
         }
       }
       mNotifBuilder.setContentText(sText);

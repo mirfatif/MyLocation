@@ -535,17 +535,19 @@ public class MainActivity extends AppCompatActivity {
         state = getString(R.string.turned_off);
       } else {
         showSats = SETTINGS.getGpsEnabled() && !mSats.isEmpty();
-        if (mGpsLocation != null
-            && !isNaN(mGpsLocation.getLatitude())
-            && !isNaN(mGpsLocation.getLongitude())) {
+        if (mGpsLocation == null) {
+          mGpsLocation = GpsSvc.mGpsLoc;
+        }
+        Location gpsLoc = mGpsLocation;
+        if (gpsLoc != null && !isNaN(gpsLoc.getLatitude()) && !isNaN(gpsLoc.getLongitude())) {
           locAvailable = true;
-          lat = Utils.formatLatLng(mGpsLocation.getLatitude());
-          lng = Utils.formatLatLng(mGpsLocation.getLongitude());
-          if (!isNaN(mGpsLocation.getAccuracy()) && mGpsLocation.getAccuracy() != 0) {
-            acc = getString(R.string.acc_unit, Utils.formatLocAccuracy(mGpsLocation.getAccuracy()));
+          lat = Utils.formatLatLng(gpsLoc.getLatitude());
+          lng = Utils.formatLatLng(gpsLoc.getLongitude());
+          if (!isNaN(gpsLoc.getAccuracy()) && gpsLoc.getAccuracy() != 0) {
+            acc = getString(R.string.acc_unit, Utils.formatLocAccuracy(gpsLoc.getAccuracy()));
           }
           long curr = System.currentTimeMillis();
-          long t = mGpsLocation.getTime();
+          long t = gpsLoc.getTime();
           t = t - Math.max(0, t - curr);
           time = DateUtils.getRelativeTimeSpanString(t).toString();
         }
@@ -599,21 +601,22 @@ public class MainActivity extends AppCompatActivity {
       state = getString(R.string.not_supported);
     } else {
       hasLocPerm = hasCoarseLocPerm() || hasFineLocPerm();
+      Location netLoc;
       if (!hasLocPerm) {
         state = getString(R.string.perm_not_granted);
       } else if (!mLocManager.isProviderEnabled(NETWORK_PROVIDER)) {
         state = getString(R.string.turned_off);
-      } else if (mNetLocation != null
-          && !isNaN(mNetLocation.getLatitude())
-          && !isNaN(mNetLocation.getLongitude())) {
+      } else if ((netLoc = mNetLocation) != null
+          && !isNaN(netLoc.getLatitude())
+          && !isNaN(netLoc.getLongitude())) {
         locAvailable = true;
-        lat = Utils.formatLatLng(mNetLocation.getLatitude());
-        lng = Utils.formatLatLng(mNetLocation.getLongitude());
-        if (!isNaN(mNetLocation.getAccuracy()) && mNetLocation.getAccuracy() != 0) {
-          acc = getString(R.string.acc_unit, Utils.formatLocAccuracy(mNetLocation.getAccuracy()));
+        lat = Utils.formatLatLng(netLoc.getLatitude());
+        lng = Utils.formatLatLng(netLoc.getLongitude());
+        if (!isNaN(netLoc.getAccuracy()) && netLoc.getAccuracy() != 0) {
+          acc = getString(R.string.acc_unit, Utils.formatLocAccuracy(netLoc.getAccuracy()));
         }
         long curr = System.currentTimeMillis();
-        long t = mNetLocation.getTime();
+        long t = netLoc.getTime();
         t = t - Math.max(0, t - curr);
         time = DateUtils.getRelativeTimeSpanString(t).toString();
       }
