@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="gps">GPS</string>
+  <string name="network">Δίκτυο</string>
+  <string name="unified_nlp_backends">Σύστημα Υποστήριξης UnifiedNLP</string>
+  <string name="grant_permission">Εκχώρηση Άδειας</string>
+  <string name="clear_agps_data">Εκκαθάριση Δεδομένων AGPS</string>
+  <string name="lock_gps">Κλείδωμα GPS</string>
+  <string name="unlock_gps">Ξεκλείδωμα GPS</string>
+  <string name="not_supported">Δεν υποστηρίζεται</string>
+  <string name="perm_not_granted">Απαιτείται άδεια</string>
+  <string name="turned_off">Απενεργοποιημένο</string>
+  <string name="failed">Απέτυχε</string>
+  <string name="map">Χάρτης</string>
+  <string name="copy">Αντιγραφή</string>
+  <string name="satellites">Δορυφόροι</string>
+  <string name="download">Λήψη</string>
+  <string name="settings">Ρυθμίσεις</string>
+  <string name="latitude">Γεωγρ. πλάτος</string>
+  <string name="longitude">Γεωγρ. μήκος</string>
+  <string name="accuracy">Ακρίβεια</string>
+  <string name="updated">Ενημερώθηκε</string>
+  <string name="total">Σύνολο </string>
+  <string name="good">Καλό</string>
+  <string name="fixed">Σταθερό</string>
+  <string name="satellites_count">Σύνολο δορυφόρων: %1$d, Καλό: %2$d, Σταθερό: %3$d</string>
+  <string name="location">Γεωγραφικό πλάτος (Lat): %1$s, Γεωγραφικό μήκος (Lon): %2$s, Ακρίβεια: %3$s μ</string>
+  <string name="acc_unit">%s m</string>
+  <string name="no_email_app_installed" maxLength="20">Οχι εφαρμογή e-mail</string>
+  <string name="no_browser_installed" maxLength="20">Όχι εφαρμογή browser</string>
+  <string name="no_maps_installed" maxLength="20">Όχι εφαρμογή χάρτη</string>
+  <string name="no_bitcoin_app_installed" maxLength="20">"Όχι πορτοφόλι Bitcoi"</string>
+  <string name="failed_open_loc_settings" maxLength="20">Λάθος με ρυθμ. θεσης</string>
+  <string name="failed_open_app_settings" maxLength="20">Λάθος ανοίγμα ρυθμίσ</string>
+  <string name="cleared" maxLength="20">Καθαρίστηκε</string>
+  <string name="copied" maxLength="20">Αντιγράφηκε</string>
+  <!-- Notification Channels -->
+  <string name="channel_gps_lock">GPS</string>
+  <string name="channel_crash_report">Αναφορά Σφάλματος</string>
+  <!-- Notification -->
+  <string name="crash_report" maxLength="15">Αναφορά Σφάλματος</string>
+  <string name="ask_to_report_crash_small" maxLength="30">Αποστολή αναφοράς σε developer</string>
+  <string name="ask_to_report_crash">Λυπούμαστε, ένα μέρος της εφαρμογής αντιμετώπισε πρόβλημα και κατέρρευσε.
+    Στείλτε το αρχείο καταγραφής στον προγραμματιστή μέσω email ή Telegram, ώστε να μπορέσει να διορθώσει το σφάλμα.
+  </string>
+  <string name="send_report" maxLength="10">Αποστ Αναφ</string>
+  <!-- Preferences -->
+  <!-- Menu -->
+  <string name="location_settings_menu_item" maxLength="15">Ρυθμίσεις Θέσης</string>
+  <string name="dark_theme_menu_item" maxLength="15">Σκοτεινό Θέμα</string>
+  <string name="language_menu_item" maxLength="15">Γλώσσα</string>
+  <string name="lang_system_menu_item" maxLength="15">Σύστημα</string>
+  <string name="lang_en_menu_item" maxLength="15">Αγγλικά</string>
+  <string name="lang_pt_rBr_menu_item" maxLength="15">Πορτογαλικά, BR</string>
+  <string name="donate_menu_item" maxLength="15">Δωρεά</string>
+  <string name="about_menu_item" maxLength="15">Σχετικά</string>
+  <!-- AboutDialog -->
+  <string name="email" maxLength="15">E-mail</string>
+  <string name="telegram_group" maxLength="15">Ομάδα Telegram</string>
+  <string name="source" maxLength="15">Πηγή</string>
+  <string name="app_rating" maxLength="15">Αξιολογήστε Με</string>
+  <string name="app_rating_summary" maxLength="20">Αξιολ στο Play Store</string>
+  <string name="privacy_policy" maxLength="20">Πολιτική Απορρήτου</string>
+  <string name="translations" maxLength="20">Μεταφράσεις</string>
+  <string name="translations_summary">Want to see the app in your language?</string>
+  <string name="language_credits"><![CDATA[      <b>Portuguese, Brazilian</b>
+      <ul>
+        <li>mezysinc <a href="https://github.com/mezysinc">IMG_SPAN_LINK</a></li>
+      </ul>
+      <br/>
+      <a href="https://crowdin.com/project/my-location">Add my language</a>
+    ]]></string>
+  <string name="share" maxLength="15">Κοινοποίηση</string>
+  <string name="share_summary">Μοιραστείτε την εφαρμογή με άλλους</string>
+  <string name="share_text">Δείτε αυτή την καταπληκτική εφαρμογή! %s</string>
+  <string name="update" maxLength="15">Ενημέρωση</string>
+  <string name="update_summary" maxLength="20">Έλεγχος ενημερώσεων</string>
+  <!-- Donate -->
+  <string name="send_bitcoin">Αποστολή Bitcoin</string>
+  <string name="ask_for_bank_account">Ζητήστε Τραπεζικό Λογαριασμό</string>
+  <string name="get_paid_version">Λήψη Πληρωμένης Έκδοσης Από Το Play Store</string>
+  <!-- Feedback -->
+  <string name="yes" maxLength="10">Ναι</string>
+  <string name="no" maxLength="10">Όχι</string>
+  <string name="do_not_ask" maxLength="15">Μη ερωτηθώ ξανά</string>
+  <string name="i_will" maxLength="10">Θα</string>
+  <string name="rate" maxLength="10">Αξιολ τώρα</string>
+  <string name="contact" maxLength="10">Γράψε Τώρα</string>
+  <string name="love_using_app" maxLength="20">Aρέσει το MyLocation</string>
+  <string name="rate_the_app">Οι καλές βαθμολογίες και κριτικές, μας βοηθούν να βελτιώσουμε την εφαρμογή και είμαστε σε θέση να
+    εξυπηρετήσουμε καλύτερα τις ανάγκες σας.
+  </string>
+  <string name="purchase_and_rate_the_app">Μπορείτε να μας βοηθήσετε να βελτιώσουμε την εφαρμογή κάνοντας μια μικρή δωρεά
+    ή αφήνοντας μια καλή αξιολόγηση για την εφαρμογή, ώστε να είμαστε σε θέση να εξυπηρετήσουμε καλύτερα τις ανάγκες σας.
+  </string>
+  <string name="ask_to_provide_feedback">Λυπούμαστε που το ακούμε. Μπορείτε να βοηθήσετε στη βελτίωση της εφαρμογής
+    επικοινωνώντας μαζί μας μέσω email ή Telegram, ώστε να μπορέσουμε να εξυπηρετήσουμε καλύτερα τις ανάγκες σας.
+  </string>
+  <string name="thank_you" maxLength="20">Σας ευχαριστούμε</string>
+</resources>

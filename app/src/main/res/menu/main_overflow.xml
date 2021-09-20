@@ -34,6 +34,10 @@
           <item
             android:id="@+id/action_locale_pt_rBr"
             android:title="@string/lang_pt_rBr_menu_item" />
+
+          <item
+            android:id="@+id/action_locale_el"
+            android:title="@string/lang_el_menu_item" />
         </group>
       </menu>
     </item>

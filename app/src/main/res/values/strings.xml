@@ -77,8 +77,10 @@
   <string name="lang_system_menu_item" maxLength="15">System</string>
   <string name="lang_en_menu_item" maxLength="15">English</string>
   <string name="lang_pt_rBr_menu_item" maxLength="15">Portuguese, Brazilian</string>
+  <string name="lang_el_menu_item" maxLength="15">Greek</string>
   <string name="lang_code_en" translatable="false">en</string>
   <string name="lang_code_pt_rBr" translatable="false">pt|Br</string>
+  <string name="lang_code_el" translatable="false">el</string>
   <string name="donate_menu_item"  maxLength="15">Donate</string>
   <string name="about_menu_item"  maxLength="15">About</string>
 
@@ -101,6 +103,11 @@
       <b>Portuguese, Brazilian</b>
       <ul>
         <li>mezysinc <a href="https://github.com/mezysinc">IMG_SPAN_LINK</a></li>
+      </ul>
+      <br/>
+      <b>Greek</b>
+      <ul>
+        <li>Chris <a href="https://crowdin.com/profile/zernex201">IMG_SPAN_LINK</a></li>
       </ul>
       <br/>
       <a href="https://crowdin.com/project/my-location">Add my language</a>
