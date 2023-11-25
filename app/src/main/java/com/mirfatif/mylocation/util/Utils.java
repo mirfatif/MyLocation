@@ -1,4 +1,4 @@
-package com.mirfatif.mylocation;
+package com.mirfatif.mylocation.util;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -6,6 +6,7 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 import static android.text.style.DynamicDrawableSpan.ALIGN_BASELINE;
 import static com.mirfatif.mylocation.MySettings.SETTINGS;
+import static com.mirfatif.mylocation.util.NotifUtils.PI_FLAGS;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -64,6 +65,10 @@ import androidx.security.crypto.EncryptedSharedPreferences.PrefKeyEncryptionSche
 import androidx.security.crypto.EncryptedSharedPreferences.PrefValueEncryptionScheme;
 import androidx.security.crypto.MasterKey;
 import androidx.security.crypto.MasterKey.KeyScheme;
+import com.mirfatif.mylocation.App;
+import com.mirfatif.mylocation.BuildConfig;
+import com.mirfatif.mylocation.NotifDismissSvc;
+import com.mirfatif.mylocation.R;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -188,6 +193,10 @@ public class Utils {
     }
   }
 
+  public static boolean isPsProVersion() {
+    return BuildConfig.APPLICATION_ID.contains("-ps-pro");
+  }
+
   private static final DecimalFormat sLatLngFormat = new DecimalFormat();
 
   static {
@@ -263,15 +272,15 @@ public class Utils {
 
       d.setTint(App.getRes().getColor(R.color.accent));
       d.setBounds(0, 0, dpToPx(12), dpToPx(12));
-    }
 
-    for (URLSpan span : string.getSpans(0, string.length(), URLSpan.class)) {
-      int start = string.getSpanStart(span);
-      int end = string.getSpanEnd(span);
-      if (!string.toString().substring(start, end).equals(IMG_SPAN_LINK)) {
-        continue;
+      for (URLSpan span : string.getSpans(0, string.length(), URLSpan.class)) {
+        int start = string.getSpanStart(span);
+        int end = string.getSpanEnd(span);
+        if (!string.toString().substring(start, end).equals(IMG_SPAN_LINK)) {
+          continue;
+        }
+        string.setSpan(new ImageSpan(d, ALIGN_BASELINE), start, end, SPAN_EXCLUSIVE_EXCLUSIVE);
       }
-      string.setSpan(new ImageSpan(d, ALIGN_BASELINE), start, end, SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     breakParas(string);
@@ -347,7 +356,7 @@ public class Utils {
           if (i == 9) {
             e.printStackTrace();
           } else {
-            Log.e(TAG, "getEncPrefs: " + e.toString());
+            Log.e(TAG, "getEncPrefs: " + e);
           }
           SystemClock.sleep(100);
         }
@@ -535,12 +544,10 @@ public class Utils {
   public static void writeCrashLog(String stackTrace) {
     synchronized (CRASH_LOG_LOCK) {
       File logFile = new File(App.getCxt().getExternalFilesDir(null), "MyLocation_crash.log");
-      boolean append = true;
-      if (!logFile.exists()
-          || logFile.length() > 512 * 1024
-          || logFile.lastModified() < System.currentTimeMillis() - TimeUnit.DAYS.toMillis(90)) {
-        append = false;
-      }
+      boolean append =
+          logFile.exists()
+              && logFile.length() <= 512 * 1024
+              && logFile.lastModified() >= System.currentTimeMillis() - TimeUnit.DAYS.toMillis(90);
       try {
         PrintWriter writer = new PrintWriter(new FileWriter(logFile, append));
         writer.println("=================================");
@@ -561,8 +568,8 @@ public class Utils {
       return;
     }
 
-    String authority = BuildConfig.APPLICATION_ID + ".FileProvider";
-    Uri logFileUri = FileProvider.getUriForFile(App.getCxt(), authority, logFile);
+    Uri logFileUri =
+        FileProvider.getUriForFile(App.getCxt(), BuildConfig.LOG_FILE_PROVIDER, logFile);
 
     final String CHANNEL_ID = "channel_crash_report";
     final String CHANNEL_NAME = getString(R.string.channel_crash_report);
@@ -570,9 +577,8 @@ public class Utils {
 
     Intent intent = new Intent(Intent.ACTION_SEND);
     intent
-        .setData(logFileUri)
+        .setDataAndType(logFileUri, "text/plain")
         .setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        .setType("text/plain")
         .putExtra(Intent.EXTRA_EMAIL, new String[] {getString(R.string.email_address)})
         .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + " - Crash Report")
         .putExtra(Intent.EXTRA_TEXT, "Find attachment.")
@@ -600,14 +606,10 @@ public class Utils {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true);
 
-    NotificationManagerCompat.from(App.getCxt()).notify(UNIQUE_ID, nb.build());
+    NotifUtils.notify(UNIQUE_ID, nb.build());
   }
 
   private static PendingIntent getNotifDismissSvcPi(int uniqueId, Intent intent) {
-    return PendingIntent.getService(App.getCxt(), uniqueId, intent, getPiFlags());
-  }
-
-  public static int getPiFlags() {
-    return PendingIntent.FLAG_UPDATE_CURRENT;
+    return PendingIntent.getService(App.getCxt(), uniqueId, intent, PI_FLAGS);
   }
 }

@@ -1,10 +1,18 @@
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
+        mavenLocal()
         mavenCentral()
+        google()
+        gradlePluginPortal()
+        maven { url = uri("https://jitpack.io") }
     }
 }
 
 rootProject.name = "My Location"
+
+if (new File(rootDir, "settings-pro.gradle.kts").isFile()) {
+    apply from: "settings-pro.gradle.kts"
+}
+
 include ':app'

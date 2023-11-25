@@ -1,9 +1,13 @@
-# MyLocation [![Download](https://img.shields.io/github/v/release/mirfatif/MyLocation?label="Download")](https://github.com/mirfatif/MyLocation/releases/latest)
+# MyLocation
 Know your geo coordinates using on-device GPS and Network location providers
 
 <a href="https://f-droid.org/packages/com.mirfatif.mylocation"><img alt="Get it on F-Droid" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="100"></a>
 <a href="https://play.google.com/store/apps/details?id=com.mirfatif.mylocation.ps"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="100"></a>
 <a href="https://apt.izzysoft.de/fdroid/index/apk/com.mirfatif.mylocation"><img alt="Get it on F-Droid" src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="100"></a>
+
+[![Github](https://img.shields.io/github/v/release/mirfatif/MyLocation?label="Github")](https://github.com/mirfatif/MyLocation/releases/latest) [![F-Droid](https://img.shields.io/f-droid/v/com.mirfatif.mylocation.svg?label="F-Droid")](https://f-droid.org/packages/com.mirfatif.mylocation) [![IzzyOnDroid](https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/com.mirfatif.mylocation)](https://apt.izzysoft.de/fdroid/index/apk/com.mirfatif.mylocation) [![Telegram](https://img.shields.io/endpoint?url=https://mirfatif.github.io/mirfatif/mlc_version.json)](https://t.me/mirfatifApps)
+
+<sup>* Join [Telegram support group](https://t.me/MyLocationApp) to get instant updates and test beta releases.</sup>
 
 ## Features
 
@@ -14,7 +18,7 @@ My Location finds your device's location in the following ways:
   You can also see the list of visible satellites with their PRNs (unique identifiers) and SNR (signal quality).
  
 * <b>Network Location Provider</b> uses Wi-Fi or Cellular ids to estimate the location. On the devices with Google Play Services installed, NLP usually uses Google Location Service at backend.
-* <b>UnifiedNLP</b> is an open source API which has been used to develop multiple NLP backends (https://github.com/microg/UnifiedNlp/wiki/Backends).
+* <b>UnifiedNLP</b> is an open source API which has been used to develop multiple [NLP backends](https://github.com/microg/UnifiedNlp/wiki/Backends).
 
 Furthermore:
 
@@ -32,12 +36,13 @@ Furthermore:
 
 ## Third-Party Resources
 
-* https://github.com/androidx/androidx
-* https://github.com/material-components/material-components-android
-* https://github.com/microg/android_external_UnifiedNlpApi
-* https://github.com/square/leakcanary
-* https://github.com/sherter/google-java-format-gradle-plugin
-* https://github.com/saket/Better-Link-Movement-Method
+Credits and thanks to the developers of:
+* [Android Jetpack](https://github.com/androidx/androidx)
+* [Material Components for Android](https://github.com/material-components/material-components-android)
+* [Unified NLP](https://github.com/microg/android_external_UnifiedNlpApi)
+* [Spotless GoogleJavaFormat](https://github.com/diffplug/spotless)
+* [BetterLinkMovementMethod](https://github.com/saket/Better-Link-Movement-Method)
+* [LeakCanary](https://github.com/square/leakcanary)
 
 ## License [![License](https://img.shields.io/github/license/mirfatif/MyLocation?label="License")](https://github.com/mirfatif/MyLocation/blob/master/LICENSE)
 
@@ -56,8 +61,19 @@ You **CANNOT** use and distribute the app icon in anyway, except for **My Locati
     You should have received a copy of the Affero GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-## Contact Us
+## Want To Support Us?
 
-**Telegram:** [https://t.me/MyLocationApp](https://t.me/MyLocationApp)  
-**XDA Thread:** [https://forum.xda-developers.com...](https://forum.xda-developers.com/t/app-5-0-my-location-know-your-geo-coordinates.4306185/)  
-**Email:** [mirfatif@gmail.com](mailto:mirfatif@gmail.com)
+<table>
+    <td><a href="https://www.buymeacoffee.com/mirfatif"><img src="https://cdn.buymeacoffee.com/buttons/default-white.png" height="45" width="170" alt="Buy Me A Coffee"/></a></td>
+    <td>&nbsp;<a href="http://mirfatif.github.io/mirfatif/bitcoin_redirect"><img src="http://mirfatif.github.io/mirfatif/logos/btc_button.png" height="37" width="150" alt="Donate Bitcoin"/></a>&nbsp;</td>
+</table>
+
+&nbsp;&nbsp;&nbsp;(`bitcoin:18ijfsv5fcDKQ6CTe4wycKxZMmti4oUXjW`)
+
+## Want To Reach Us?
+
+<table>
+    <td>&nbsp;<a href="https://t.me/MyLocationApp"><img src="https://raw.githubusercontent.com/mirfatif/mirfatif/main/logos/telegram.png" height="25"/> Telegram</a>&nbsp;</td>
+    <td><a href="https://forum.xda-developers.com/t/app-5-0-my-location-know-your-geo-coordinates.4306185/"><img src="https://raw.githubusercontent.com/mirfatif/mirfatif/main/logos/xda.png" height="23" width="21"/> XDA Thread</a></td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="mailto:mirfatif.dev@gmail.com"><img src="https://raw.githubusercontent.com/mirfatif/mirfatif/main/logos/email.png" height="22" width="25"/> Email</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</table>

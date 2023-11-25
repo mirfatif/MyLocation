@@ -1,19 +1,19 @@
 package com.mirfatif.mylocation;
 
 import static com.mirfatif.mylocation.MySettings.SETTINGS;
-import static com.mirfatif.mylocation.Utils.getString;
-import static com.mirfatif.mylocation.Utils.hasCoarseLocPerm;
-import static com.mirfatif.mylocation.Utils.isNaN;
+import static com.mirfatif.mylocation.util.Utils.getString;
+import static com.mirfatif.mylocation.util.Utils.hasCoarseLocPerm;
+import static com.mirfatif.mylocation.util.Utils.isNaN;
 
 import android.location.Location;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mirfatif.mylocation.NlpAdapter.NlpViewHolder;
 import com.mirfatif.mylocation.databinding.NlpItemBinding;
+import com.mirfatif.mylocation.util.Utils;
 import java.util.List;
 
 public class NlpAdapter extends RecyclerView.Adapter<NlpViewHolder> {
@@ -26,19 +26,15 @@ public class NlpAdapter extends RecyclerView.Adapter<NlpViewHolder> {
     mBackends = backends;
   }
 
-  @NonNull
-  @Override
-  public NlpViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+  public NlpViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     LayoutInflater inflater = LayoutInflater.from(parent.getContext());
     return new NlpViewHolder(NlpItemBinding.inflate(inflater, parent, false));
   }
 
-  @Override
-  public void onBindViewHolder(@NonNull NlpViewHolder holder, int position) {
+  public void onBindViewHolder(NlpViewHolder holder, int position) {
     holder.bind(position);
   }
 
-  @Override
   public int getItemCount() {
     return mBackends.size();
   }

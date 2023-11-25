@@ -1,12 +1,10 @@
 package com.mirfatif.mylocation;
 
-import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.annotation.NonNull;
 import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mirfatif.mylocation.MainActivity.Sat;
@@ -20,7 +18,6 @@ public class SatAdapter extends RecyclerView.Adapter<SatViewHolder> {
 
   private final List<Sat> mSats = new ArrayList<>();
 
-  @SuppressLint("NotifyDataSetChanged")
   void submitList(List<Sat> sats) {
     synchronized (mSats) {
       mSats.clear();
@@ -29,20 +26,16 @@ public class SatAdapter extends RecyclerView.Adapter<SatViewHolder> {
     }
   }
 
-  @Override
   public int getItemCount() {
     return mSats.size();
   }
 
-  @NonNull
-  @Override
-  public SatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+  public SatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     LayoutInflater inflater = LayoutInflater.from(parent.getContext());
     return new SatViewHolder(SatItemBinding.inflate(inflater, parent, false));
   }
 
-  @Override
-  public void onBindViewHolder(@NonNull SatViewHolder holder, int position) {
+  public void onBindViewHolder(SatViewHolder holder, int position) {
     holder.bind(position);
   }
 
@@ -50,7 +43,7 @@ public class SatAdapter extends RecyclerView.Adapter<SatViewHolder> {
 
     private final SatItemBinding mB;
 
-    public SatViewHolder(@NonNull SatItemBinding binding) {
+    public SatViewHolder(SatItemBinding binding) {
       super(binding.getRoot());
       mB = binding;
     }

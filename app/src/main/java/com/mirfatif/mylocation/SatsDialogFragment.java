@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.appcompat.app.AppCompatDialogFragment;
@@ -13,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.mirfatif.mylocation.MainActivity.Sat;
 import com.mirfatif.mylocation.databinding.RvSatsBinding;
+import com.mirfatif.mylocation.util.Utils;
 import java.util.List;
 
 public class SatsDialogFragment extends AppCompatDialogFragment {
@@ -21,8 +21,7 @@ public class SatsDialogFragment extends AppCompatDialogFragment {
 
   private MainActivity mA;
 
-  @Override
-  public void onAttach(@NonNull Context context) {
+  public void onAttach(Context context) {
     super.onAttach(context);
     mA = (MainActivity) getActivity();
   }
@@ -33,8 +32,6 @@ public class SatsDialogFragment extends AppCompatDialogFragment {
     mAdapter.submitList(satList);
   }
 
-  @NonNull
-  @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     RvSatsBinding b = RvSatsBinding.inflate(mA.getLayoutInflater());
 
@@ -48,15 +45,13 @@ public class SatsDialogFragment extends AppCompatDialogFragment {
     return Utils.setDialogBg(d);
   }
 
-  // We cannot use Dialog's OnDismiss and OnCancel Listeners, DialogFragment owns them.
   private OnDismissListener mDismissListener;
 
   public void setOnDismissListener(OnDismissListener dismissListener) {
     mDismissListener = dismissListener;
   }
 
-  @Override
-  public void onDismiss(@NonNull DialogInterface dialog) {
+  public void onDismiss(DialogInterface dialog) {
     super.onDismiss(dialog);
     if (mDismissListener != null) {
       mDismissListener.onDismiss(dialog);

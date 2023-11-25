@@ -1,55 +1,100 @@
-apply plugin: 'com.android.application'
+apply plugin: 'apk-conventions'
+
+def isPro = new File(projectDir, "build-pro.gradle").isFile()
+
+if (isPro) {
+    apply from: "build-pro.gradle"
+}
 
 android {
-    compileSdk compileSdkVer
-    buildToolsVersion buildToolsVer
+    namespace "com.mirfatif.mylocation"
 
     defaultConfig {
-        applicationId "com.mirfatif.mylocation"
-        minSdk minSdkVer
-        targetSdk targetSdkVer
-        versionCode 104
-        versionName "v1.04"
-
-        buildConfigField "boolean", "IS_PS", "false"
+        applicationId namespace
+        versionCode 105
+        versionName "v1.05"
     }
 
-    buildTypes {
-        release {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    flavorDimensions.addAll('type', 'version')
+    productFlavors {
+        self {
+            dimension 'type'
+        }
+        ps {
+            dimension 'type'
+            applicationIdSuffix '.ps'
+            versionNameSuffix '-ps'
+        }
+        fdroid {
+            dimension 'type'
+            versionNameSuffix '-fd'
+        }
+
+        foss {
+            dimension 'version'
+        }
+        pro {
+            dimension 'version'
+            applicationIdSuffix '.pro'
+            versionNameSuffix '-pro'
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+    variantFilter { variant ->
+        List names = variant.flavors*.name
+        if (!isPro) {
+            if (!names.contains('fdroid') || !names.contains('foss')) {
+                variant.setIgnore(true)
+            }
+        } else if (names.contains('ps') && names.contains('foss')) {
+            variant.setIgnore(true)
+        } else if (names.contains('fdroid') && names.contains('pro')) {
+            variant.setIgnore(true)
+        }
     }
 
-    dependenciesInfo {
-        includeInApk false
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+    }
+
+    applicationVariants.configureEach { variant ->
+        def mf = variant.mergedFlavor
+        if (variant.flavorName == 'psPro' && variant.buildType.name == 'release') {
+            // No .pro suffix for Play Store Pro release
+            mf.setApplicationId(variant.applicationId.replace('.pro', ''))
+        }
+
+        String lfp = variant.applicationId + '.LogFileProvider'
+        mf.addManifestPlaceholders(LOG_FILE_PROVIDER: lfp)
+        variant.buildConfigField 'String', 'LOG_FILE_PROVIDER', '"' + lfp + '"'
     }
 
     buildFeatures {
-        viewBinding true
+        aidl true
     }
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'androidx.browser:browser:1.3.0'
-    implementation "androidx.security:security-crypto:1.1.0-alpha03"
-    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.recyclerview
+    implementation libs.androidx.browser
+    implementation libs.androidx.security.crypto
+    implementation libs.androidx.coordinator.layout
 
     // For BottomSheetDialogFragment
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation libs.material
 
     // To handle hyperlink onClick in TextView
-    implementation 'me.saket:better-link-movement-method:2.2.0'
+    implementation libs.better.link.movement.method
+
+    debugImplementation libs.leakcanary.android
 }
 
-apply plugin: 'com.github.sherter.google-java-format'
-preBuild.dependsOn(verifyGoogleJavaFormat)
+lsparanoid {
+    variantFilter {
+        !it.name.contains('Foss') && it.buildType != 'debug'
+    }
+}

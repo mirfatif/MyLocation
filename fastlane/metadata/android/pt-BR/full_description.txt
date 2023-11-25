@@ -13,3 +13,5 @@ Você pode ver a lista de satélites visíveis com seus PRNs (identificadores ú
 <b>Além disso:</b>
 <b>-</b> As coordenadas de localização podem ser copiadas ao Clipboard ou abertas no app de mapas, se instalado.
 <b>-</b> Também é suportada a eliminação de dados auxiliares do A-GPS.
+
+<b>Note</b> que este app não é um provedor de localização, como o UnifiedNLP (ou microG GmsCore). Ele apenas mostra as informações de localização recebidas dos provedores de localização AOSP (GPS e rede) ou diretamente dos back-ends UnifiedNLP (o que estiver disponível no dispositivo).

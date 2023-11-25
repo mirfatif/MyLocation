@@ -1,31 +1,25 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.1'
-    }
-}
-
 plugins {
-    id 'com.github.sherter.google-java-format' version '0.9'
+    id 'com.diffplug.spotless' apply true
 }
 
-allprojects {
-    tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
-    }
-
-    project.ext {
-        compileSdkVer = 30
-        buildToolsVer = "30.0.3"
-        minSdkVer = 21
-        targetSdkVer = 30
-        ndkVer = "22.1.7171670"
-    }
+ext {
+    set("android.sdk.compile", 34)
+    set("android.sdk.target", 34)
+    set("android.sdk.tools.build", "34.0.0")
+    set("android.sdk.min", 21)
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+spotless {
+    predeclareDeps()
+}
+
+spotlessPredeclare {
+    java {
+        target("src/**/*.java")
+        googleJavaFormat()
+    }
+    kotlin {
+        target("src/**/*.kt", "src/**/*.kts", "*.kts")
+        ktfmt()
+    }
 }

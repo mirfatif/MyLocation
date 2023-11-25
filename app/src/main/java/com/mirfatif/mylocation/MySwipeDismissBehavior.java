@@ -4,14 +4,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat;
 import androidx.customview.widget.ViewDragHelper;
 
-// com.google.android.material.behavior.SwipeDismissBehavior
 public class MySwipeDismissBehavior extends CoordinatorLayout.Behavior<View> {
 
   private static final float mSensitivity = 0f;
@@ -29,9 +27,7 @@ public class MySwipeDismissBehavior extends CoordinatorLayout.Behavior<View> {
     mListener = listener;
   }
 
-  @Override
-  public boolean onLayoutChild(
-      @NonNull CoordinatorLayout parent, @NonNull View child, int layoutDirection) {
+  public boolean onLayoutChild(CoordinatorLayout parent, View child, int layoutDirection) {
     boolean handled = super.onLayoutChild(parent, child, layoutDirection);
     if (ViewCompat.getImportantForAccessibility(child)
         == ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
@@ -41,22 +37,16 @@ public class MySwipeDismissBehavior extends CoordinatorLayout.Behavior<View> {
     return handled;
   }
 
-  @Override
-  public boolean onInterceptTouchEvent(
-      @NonNull CoordinatorLayout parent, @NonNull View child, @NonNull MotionEvent event) {
+  public boolean onInterceptTouchEvent(CoordinatorLayout parent, View child, MotionEvent event) {
     boolean dispatchEventToHelper = mInterceptingEvents;
 
     switch (event.getActionMasked()) {
-      case MotionEvent.ACTION_DOWN:
+      case MotionEvent.ACTION_DOWN -> {
         mInterceptingEvents =
             parent.isPointInChildBounds(child, (int) event.getX(), (int) event.getY());
         dispatchEventToHelper = mInterceptingEvents;
-        break;
-      case MotionEvent.ACTION_UP:
-      case MotionEvent.ACTION_CANCEL:
-        // Reset the ignore flag for next times
-        mInterceptingEvents = false;
-        break;
+      }
+      case MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> mInterceptingEvents = false;
     }
 
     if (dispatchEventToHelper) {
@@ -66,9 +56,7 @@ public class MySwipeDismissBehavior extends CoordinatorLayout.Behavior<View> {
     return false;
   }
 
-  @Override
-  public boolean onTouchEvent(
-      @NonNull CoordinatorLayout parent, @NonNull View child, @NonNull MotionEvent event) {
+  public boolean onTouchEvent(CoordinatorLayout parent, View child, MotionEvent event) {
     if (mViewDragHelper != null) {
       mViewDragHelper.processTouchEvent(event);
       return true;
@@ -83,33 +71,25 @@ public class MySwipeDismissBehavior extends CoordinatorLayout.Behavior<View> {
         private int originalCapturedViewLeft;
         private int activePointerId = INVALID_POINTER_ID;
 
-        @Override
-        public boolean tryCaptureView(@NonNull View child, int pointerId) {
-          // Only capture if we don't already have an active pointer id
+        public boolean tryCaptureView(View child, int pointerId) {
+
           return (activePointerId == INVALID_POINTER_ID || activePointerId == pointerId);
         }
 
-        @Override
-        public void onViewCaptured(@NonNull View capturedChild, int activePointerId) {
+        public void onViewCaptured(View capturedChild, int activePointerId) {
           this.activePointerId = activePointerId;
           originalCapturedViewLeft = capturedChild.getLeft();
 
-          /*
-           The view has been captured, and thus a drag is about to
-           start so stop any parents intercepting
-          */
           final ViewParent parent = capturedChild.getParent();
           if (parent != null) {
             parent.requestDisallowInterceptTouchEvent(true);
           }
         }
 
-        @Override
         public void onViewDragStateChanged(int state) {}
 
-        @Override
-        public void onViewReleased(@NonNull View child, float xvel, float yvel) {
-          // Reset the active pointer ID
+        public void onViewReleased(View child, float xvel, float yvel) {
+
           activePointerId = INVALID_POINTER_ID;
 
           final int childWidth = child.getWidth();
@@ -123,7 +103,7 @@ public class MySwipeDismissBehavior extends CoordinatorLayout.Behavior<View> {
                     : originalCapturedViewLeft + childWidth;
             dismiss = true;
           } else {
-            // Else, reset back to the original left
+
             targetLeft = originalCapturedViewLeft;
           }
 
@@ -134,7 +114,7 @@ public class MySwipeDismissBehavior extends CoordinatorLayout.Behavior<View> {
           }
         }
 
-        private boolean shouldDismiss(@NonNull View child, float xvel) {
+        private boolean shouldDismiss(View child, float xvel) {
           if (xvel != 0f) {
             return true;
           } else {
@@ -144,20 +124,17 @@ public class MySwipeDismissBehavior extends CoordinatorLayout.Behavior<View> {
           }
         }
 
-        @Override
-        public int getViewHorizontalDragRange(@NonNull View child) {
+        public int getViewHorizontalDragRange(View child) {
           return child.getWidth();
         }
 
-        @Override
-        public int clampViewPositionHorizontal(@NonNull View child, int left, int dx) {
+        public int clampViewPositionHorizontal(View child, int left, int dx) {
           int min = originalCapturedViewLeft - child.getWidth();
           int max = originalCapturedViewLeft + child.getWidth();
           return Math.min(Math.max(min, left), max);
         }
 
-        @Override
-        public int clampViewPositionVertical(@NonNull View child, int top, int dy) {
+        public int clampViewPositionVertical(View child, int top, int dy) {
           return child.getTop();
         }
       };
@@ -177,7 +154,6 @@ public class MySwipeDismissBehavior extends CoordinatorLayout.Behavior<View> {
       this.dismiss = dismiss;
     }
 
-    @Override
     public void run() {
       if (mViewDragHelper != null && mViewDragHelper.continueSettling(true)) {
         ViewCompat.postOnAnimation(view, this);

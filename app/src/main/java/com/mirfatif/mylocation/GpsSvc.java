@@ -1,24 +1,23 @@
 package com.mirfatif.mylocation;
 
-import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_MANIFEST;
+import static android.os.Build.VERSION.SDK_INT;
 import static androidx.core.app.NotificationManagerCompat.IMPORTANCE_DEFAULT;
 import static com.mirfatif.mylocation.BuildConfig.APPLICATION_ID;
-import static com.mirfatif.mylocation.Utils.formatLatLng;
-import static com.mirfatif.mylocation.Utils.formatLocAccuracy;
-import static com.mirfatif.mylocation.Utils.getPiFlags;
-import static com.mirfatif.mylocation.Utils.hasFineLocPerm;
+import static com.mirfatif.mylocation.util.NotifUtils.PI_FLAGS;
+import static com.mirfatif.mylocation.util.Utils.formatLatLng;
+import static com.mirfatif.mylocation.util.Utils.formatLocAccuracy;
+import static com.mirfatif.mylocation.util.Utils.hasFineLocPerm;
 
-import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.location.GnssStatus;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -27,7 +26,8 @@ import android.os.PowerManager.WakeLock;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationCompat.BigTextStyle;
 import androidx.core.app.NotificationCompat.Builder;
-import androidx.core.app.NotificationManagerCompat;
+import com.mirfatif.mylocation.util.NotifUtils;
+import com.mirfatif.mylocation.util.Utils;
 import java.util.concurrent.Future;
 
 public class GpsSvc extends Service implements LocationListener, GpsStatus.Listener {
@@ -42,17 +42,16 @@ public class GpsSvc extends Service implements LocationListener, GpsStatus.Liste
   private final PowerManager mPowerManager =
       (PowerManager) App.getCxt().getSystemService(Context.POWER_SERVICE);
 
-  private final NotificationManagerCompat mNotifManager =
-      NotificationManagerCompat.from(App.getCxt());
+  private GnssStatus.Callback mGnssStatusCallback;
 
-  @Override
   public IBinder onBind(Intent intent) {
     return null;
   }
 
-  @Override
   public int onStartCommand(Intent intent, int flags, int startId) {
-    if (hasFineLocPerm() && (intent == null || !ACTION_STOP_SERVICE.equals(intent.getAction()))) {
+    if (hasFineLocPerm()
+        && NotifUtils.hasNotifPerm()
+        && (intent == null || !ACTION_STOP_SERVICE.equals(intent.getAction()))) {
       showNotif();
       startGpsLocListener();
       mIsRunning = true;
@@ -63,7 +62,6 @@ public class GpsSvc extends Service implements LocationListener, GpsStatus.Liste
     }
   }
 
-  @Override
   public void onDestroy() {
     stop();
     super.onDestroy();
@@ -71,43 +69,48 @@ public class GpsSvc extends Service implements LocationListener, GpsStatus.Liste
 
   static Location mGpsLoc;
 
-  @Override
   public void onLocationChanged(Location location) {
     mGpsLoc = location;
     updateNotification();
   }
 
-  @Override
   public void onProviderEnabled(String provider) {
     mLastUpdate = 0;
     updateNotification();
   }
 
-  @Override
   public void onProviderDisabled(String provider) {
     mLastUpdate = 0;
     updateNotification();
   }
 
-  @Override
   public void onStatusChanged(String provider, int status, Bundle extras) {
     mLastUpdate = 0;
     updateNotification();
   }
 
   private void stop() {
-    mIsRunning = false;
-    stopGpsLocListener();
-    mGpsLoc = null;
-    if (mFuture != null) {
-      mFuture.cancel(true);
+    synchronized (NOTIF_UPDATE_LOCK) {
+      mIsRunning = false;
+      stopGpsLocListener();
+      mGpsLoc = null;
+      if (mFuture != null) {
+        mFuture.cancel(true);
+      }
+      stopForeground(true);
+      stopSelf();
     }
-    stopSelf();
   }
 
-  @Override
   public void onGpsStatusChanged(int event) {
-    updateGpsSats();
+    updateGpsSats(null);
+  }
+
+  private class LocCallback extends GnssStatus.Callback {
+
+    public void onSatelliteStatusChanged(GnssStatus status) {
+      Utils.runBg(() -> updateGpsSats(status));
+    }
   }
 
   private WakeLock mWakeLock;
@@ -124,37 +127,37 @@ public class GpsSvc extends Service implements LocationListener, GpsStatus.Liste
     Utils.createNotifChannel(CHANNEL_ID, CHANNEL_NAME, IMPORTANCE_DEFAULT);
 
     Intent intent = new Intent(App.getCxt(), MainActivity.class);
-    PendingIntent pi = PendingIntent.getActivity(App.getCxt(), NOTIF_ID, intent, getPiFlags());
+    PendingIntent pi = PendingIntent.getActivity(App.getCxt(), NOTIF_ID, intent, PI_FLAGS);
 
     mNotifBuilder =
         new Builder(App.getCxt(), CHANNEL_ID)
             .setSilent(true)
             .setOnlyAlertOnce(true)
             .setSmallIcon(R.drawable.notification_icon)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT) // For N and below
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pi)
             .setAutoCancel(false)
             .setOngoing(true)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setContentTitle(getString(R.string.channel_gps_lock));
 
-    if (VERSION.SDK_INT >= VERSION_CODES.Q) {
-      startForeground(NOTIF_ID, mNotifBuilder.build(), FOREGROUND_SERVICE_TYPE_MANIFEST);
-    } else {
-      startForeground(NOTIF_ID, mNotifBuilder.build());
-    }
+    startForeground(NOTIF_ID, mNotifBuilder.build());
 
-    updateGpsSats();
+    updateGpsSats(null);
     mLastUpdate = 0;
     updateNotification();
   }
 
   public static final long MIN_DELAY = 5000;
 
-  @SuppressLint("MissingPermission")
   private void startGpsLocListener() {
     mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_DELAY, 0, this);
-    mLocManager.addGpsStatusListener(this);
+    if (SDK_INT >= VERSION_CODES.N) {
+      mGnssStatusCallback = new LocCallback();
+      mLocManager.registerGnssStatusCallback(mGnssStatusCallback);
+    } else {
+      mLocManager.addGpsStatusListener(this);
+    }
   }
 
   private void stopGpsLocListener() {
@@ -165,28 +168,47 @@ public class GpsSvc extends Service implements LocationListener, GpsStatus.Liste
       mWakeLock = null;
     }
     mLocManager.removeUpdates(this);
-    mLocManager.removeGpsStatusListener(this);
+    if (SDK_INT >= VERSION_CODES.N) {
+      mLocManager.unregisterGnssStatusCallback(mGnssStatusCallback);
+    } else {
+      mLocManager.removeGpsStatusListener(this);
+    }
   }
 
   private final Object UPDATE_GPS_SATS_LOCK = new Object();
   private int mTotalSats, mSatsStrongSig, mUsedSats;
 
-  @SuppressLint("MissingPermission")
-  private void updateGpsSats() {
+  private void updateGpsSats(GnssStatus status) {
     synchronized (UPDATE_GPS_SATS_LOCK) {
       if (!hasFineLocPerm()) {
         stop();
         return;
       }
-      GpsStatus gpsStatus = mLocManager.getGpsStatus(null);
-      mTotalSats = mSatsStrongSig = mUsedSats = 0;
-      for (GpsSatellite gpsSat : gpsStatus.getSatellites()) {
-        mTotalSats++;
-        if (gpsSat.getSnr() != 0) {
-          mSatsStrongSig++;
+
+      GpsStatus gpsStatus;
+      if (SDK_INT >= VERSION_CODES.N) {
+        if (status != null) {
+          mTotalSats = mSatsStrongSig = mUsedSats = 0;
+          for (int i = 0; i < status.getSatelliteCount(); i++) {
+            mTotalSats++;
+            if (status.getCn0DbHz(i) != 0) {
+              mSatsStrongSig++;
+            }
+            if (status.usedInFix(i)) {
+              mUsedSats++;
+            }
+          }
         }
-        if (gpsSat.usedInFix()) {
-          mUsedSats++;
+      } else if ((gpsStatus = mLocManager.getGpsStatus(null)) != null) {
+        mTotalSats = mSatsStrongSig = mUsedSats = 0;
+        for (GpsSatellite gpsSat : gpsStatus.getSatellites()) {
+          mTotalSats++;
+          if (gpsSat.getSnr() != 0) {
+            mSatsStrongSig++;
+          }
+          if (gpsSat.usedInFix()) {
+            mUsedSats++;
+          }
         }
       }
       updateNotification();
@@ -207,6 +229,10 @@ public class GpsSvc extends Service implements LocationListener, GpsStatus.Liste
 
   private void updateNotifBg() {
     synchronized (NOTIF_UPDATE_LOCK) {
+      if (!mIsRunning) {
+        return;
+      }
+
       long sleep = 5000 + mLastUpdate - System.currentTimeMillis();
       if (sleep > 0) {
         try {
@@ -248,7 +274,7 @@ public class GpsSvc extends Service implements LocationListener, GpsStatus.Liste
       } else {
         mNotifBuilder.setShowWhen(false);
       }
-      mNotifManager.notify(NOTIF_ID, mNotifBuilder.build());
+      NotifUtils.notify(NOTIF_ID, mNotifBuilder.build());
     }
   }
 }

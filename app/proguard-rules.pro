@@ -3,3 +3,6 @@
 
 # Hide the original source file name.
 -renamesourcefileattribute SourceFile
+
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.concurrent.GuardedBy

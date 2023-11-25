@@ -5,40 +5,33 @@ import static com.mirfatif.mylocation.MySettings.SETTINGS;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.mirfatif.mylocation.databinding.FeedbackDialogBinding;
+import com.mirfatif.mylocation.util.Utils;
 
 public class FeedbackDialogFrag extends BottomSheetDialogFragment {
 
   private MainActivity mA;
 
-  @Override
-  public void onAttach(@NonNull Context context) {
+  public void onAttach(Context context) {
     super.onAttach(context);
     mA = (MainActivity) getActivity();
   }
 
-  @NonNull
-  @Override
-  public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+  public Dialog onCreateDialog(Bundle savedInstanceState) {
     BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
     dialog.setDismissWithAnimation(true);
     return dialog;
   }
 
-  @Nullable
-  @Override
   public View onCreateView(
-      @NonNull LayoutInflater inflater,
-      @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
+      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
     boolean isYes = requireArguments().getBoolean(YES);
     FeedbackDialogBinding b =
@@ -46,15 +39,15 @@ public class FeedbackDialogFrag extends BottomSheetDialogFragment {
 
     b.msgV.setText(
         isYes
-            ? (BuildConfig.IS_PS ? R.string.rate_the_app : R.string.purchase_and_rate_the_app)
+            ? (Utils.isPsProVersion() ? R.string.rate_the_app : R.string.purchase_and_rate_the_app)
             : R.string.ask_to_provide_feedback);
     b.neutralButton.setText(R.string.do_not_ask);
     b.posButton.setText(
-        isYes ? (BuildConfig.IS_PS ? R.string.rate : R.string.i_will) : R.string.contact);
+        isYes ? (Utils.isPsProVersion() ? R.string.rate : R.string.i_will) : R.string.contact);
 
     b.neutralButton.setOnClickListener(
         v -> {
-          SETTINGS.setAskForFeedbackTs(Long.MAX_VALUE);
+          SETTINGS.setAskForFeedbackTs(DateUtils.WEEK_IN_MILLIS * 8);
           dismiss();
         });
 
@@ -62,7 +55,7 @@ public class FeedbackDialogFrag extends BottomSheetDialogFragment {
         v -> {
           dismiss();
           if (isYes) {
-            if (BuildConfig.IS_PS) {
+            if (Utils.isPsProVersion()) {
               Utils.openWebUrl(mA, Utils.getString(R.string.play_store_url));
             } else {
               DonateDialogFragment.show(mA);
@@ -78,15 +71,9 @@ public class FeedbackDialogFrag extends BottomSheetDialogFragment {
     return b.getRoot();
   }
 
-  @Override
-  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+  public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    /*
-     Replace the default white background with the custom on which has
-     round corners and background color set.
-     Another option is to override the bottomSheetDialog theme in style.xml
-    */
     ((View) view.getParent()).setBackgroundResource(R.drawable.bottom_sheet_background);
   }
 

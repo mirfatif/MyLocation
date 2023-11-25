@@ -1,10 +1,11 @@
 package com.mirfatif.mylocation;
 
-import static com.mirfatif.mylocation.Utils.getString;
+import static com.mirfatif.mylocation.util.Utils.getString;
 
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.text.format.DateUtils;
+import com.mirfatif.mylocation.util.Utils;
 import java.util.concurrent.TimeUnit;
 
 public enum MySettings {
@@ -22,7 +23,6 @@ public enum MySettings {
     return mPrefs.getInt(prefKey, defValue);
   }
 
-  @SuppressWarnings("SameParameterValue")
   private long getLongPref(int keyResId) {
     String prefKey = getString(keyResId);
     return mPrefs.getLong(prefKey, 0);
@@ -38,7 +38,6 @@ public enum MySettings {
     mPrefs.edit().putInt(prefKey, integer).apply();
   }
 
-  @SuppressWarnings("SameParameterValue")
   private void savePref(int key, long _long) {
     String prefKey = getString(key);
     mPrefs.edit().putLong(prefKey, _long).apply();
@@ -68,7 +67,6 @@ public enum MySettings {
     mPrefs.edit().putBoolean(getString(R.string.pref_main_nlp_enabled_key), enabled).apply();
   }
 
-  @SuppressLint("ApplySharedPref")
   public boolean shouldAskToSendCrashReport() {
     int crashCount = getIntPref(R.string.pref_main_crash_report_count_key, 1);
     long lastTS = getLongPref(R.string.pref_main_crash_report_ts_key);
@@ -123,6 +121,11 @@ public enum MySettings {
       savePref(appLaunchCountId, 0);
       setAskForFeedbackTs(System.currentTimeMillis());
     }
+
+    if (lastTS - System.currentTimeMillis() > DateUtils.WEEK_IN_MILLIS * 8) {
+      setAskForFeedbackTs(DateUtils.WEEK_IN_MILLIS * 8);
+    }
+
     return ask;
   }
 

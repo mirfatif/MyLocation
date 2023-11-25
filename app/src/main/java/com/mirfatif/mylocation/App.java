@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
+import com.mirfatif.mylocation.util.Utils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -14,7 +15,6 @@ public class App extends Application {
   private static Context mAppContext;
   private Thread.UncaughtExceptionHandler defaultExceptionHandler;
 
-  @Override
   public void onCreate() {
     super.onCreate();
     mAppContext = getApplicationContext();
@@ -34,7 +34,6 @@ public class App extends Application {
           defaultExceptionHandler.uncaughtException(t, e);
         });
 
-    new AppFlav().onCreate();
     Utils.runBg(this::getEncPrefs);
   }
 
@@ -50,7 +49,6 @@ public class App extends Application {
     return mAppContext.getResources();
   }
 
-  // To avoid delays later
   private void getEncPrefs() {
     Utils.getEncPrefs();
   }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  package="com.mirfatif.mylocation">
+  xmlns:tools="http://schemas.android.com/tools">
 
   <uses-feature android:name="android.hardware.location" />
 
@@ -9,21 +8,23 @@
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 
-  <uses-permission android:name="android.permission.WAKE_LOCK"/>
-  <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
   <application
+    android:name=".App"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
-    android:name=".App"
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/SplashTheme"
     tools:ignore="AllowBackup">
 
     <activity
-      android:exported="true"
-      android:name=".MainActivity">
+      android:name=".MainActivity"
+      android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -31,19 +32,19 @@
     </activity>
 
     <service
+      android:name=".GpsSvc"
       android:exported="false"
-      android:foregroundServiceType="location"
-      android:name=".GpsSvc" />
+      android:foregroundServiceType="location" />
 
     <service
-      android:exported="false"
-      android:name=".NotifDismissSvc" />
+      android:name=".NotifDismissSvc"
+      android:exported="false" />
 
     <provider
-      android:authorities="com.mirfatif.mylocation.FileProvider"
+      android:name="androidx.core.content.FileProvider"
+      android:authorities="${LOG_FILE_PROVIDER}"
       android:exported="false"
-      android:grantUriPermissions="true"
-      android:name="androidx.core.content.FileProvider">
+      android:grantUriPermissions="true">
       <meta-data
         android:name="android.support.FILE_PROVIDER_PATHS"
         android:resource="@xml/file_paths" />

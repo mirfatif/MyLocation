@@ -1,6 +1,6 @@
 package com.mirfatif.mylocation;
 
-import static com.mirfatif.mylocation.Utils.openWebUrl;
+import static com.mirfatif.mylocation.util.Utils.openWebUrl;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -9,12 +9,12 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import com.mirfatif.mylocation.databinding.DonateDialogBinding;
+import com.mirfatif.mylocation.util.Utils;
 
 public class DonateDialogFragment extends AppCompatDialogFragment {
 
@@ -22,16 +22,13 @@ public class DonateDialogFragment extends AppCompatDialogFragment {
 
   private MainActivity mA;
 
-  @Override
-  public void onAttach(@NonNull Context context) {
+  public void onAttach(Context context) {
     super.onAttach(context);
     mA = (MainActivity) getActivity();
   }
 
   private DonateDialogBinding mB;
 
-  @NonNull
-  @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     mB = DonateDialogBinding.inflate(mA.getLayoutInflater());
 

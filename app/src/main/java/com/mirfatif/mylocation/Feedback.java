@@ -9,6 +9,7 @@ import android.view.animation.AnimationUtils;
 import androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams;
 import com.mirfatif.mylocation.MySwipeDismissBehavior.OnDismissListener;
 import com.mirfatif.mylocation.databinding.ActivityMainBinding;
+import com.mirfatif.mylocation.util.Utils;
 
 class Feedback {
 

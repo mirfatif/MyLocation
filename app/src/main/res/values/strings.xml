@@ -37,30 +37,42 @@
   <string name="location">Latitude: %1$s, Longitude: %2$s, Accuracy: %3$s m</string>
   <string name="acc_unit">%s m</string>
 
-  <string name="no_email_app_installed" maxLength="20">No email app installed</string>
-  <string name="no_browser_installed" maxLength="20">No web browser app installed</string>
-  <string name="no_maps_installed" maxLength="20">No maps app installed</string>
-  <string name="no_bitcoin_app_installed" maxLength="20">"Bitcoin Wallet app not found"</string>
-  <string name="failed_open_loc_settings" maxLength="20">Failed to open location settings</string>
-  <string name="failed_open_app_settings" maxLength="20">Failed to open app settings</string>
-  <string name="cleared" maxLength="20">Cleared</string>
-  <string name="copied" maxLength="20">Copied</string>
+  <!-- CHAR LIMIT: 20 -->
+  <string name="no_email_app_installed">No email app installed</string>
+  <!-- CHAR LIMIT: 20 -->
+  <string name="no_browser_installed">No web browser app installed</string>
+  <!-- CHAR LIMIT: 20 -->
+  <string name="no_maps_installed">No maps app installed</string>
+  <!-- CHAR LIMIT: 20 -->
+  <string name="no_bitcoin_app_installed">Bitcoin Wallet app not found</string>
+  <!-- CHAR LIMIT: 20 -->
+  <string name="failed_open_loc_settings">Failed to open location settings</string>
+  <!-- CHAR LIMIT: 20 -->
+  <string name="failed_open_app_settings">Failed to open app settings</string>
+  <!-- CHAR LIMIT: 20 -->
+  <string name="cleared">Cleared</string>
+  <!-- CHAR LIMIT: 20 -->
+  <string name="copied">Copied</string>
 
   <!-- Notification Channels -->
+  <string name="crowdin_comment_break_strings_1" translatable="false">Crowdin comment break</string>
   <string name="channel_gps_lock">GPS</string>
   <integer name="channel_gps_lock">100</integer>
   <string name="channel_crash_report">Crash Report</string>
   <integer name="channel_crash_report">200</integer>
 
   <!-- Notification -->
-  <string name="crash_report" maxLength="15">Crash Report</string>
-  <string name="ask_to_report_crash_small" maxLength="30">Send crash report to the developer</string>
-  <string name="ask_to_report_crash">Sorry, a component of the app had a problem and crashed.
-    Send the log file to the developer through email or Telegram so that the bug can be fixed.
-  </string>
-  <string name="send_report" maxLength="10">Send Report</string>
+  <string name="crowdin_comment_break_strings_2" translatable="false">Crowdin comment break</string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="crash_report">Crash Report</string>
+  <!-- CHAR LIMIT: 30 -->
+  <string name="ask_to_report_crash_small">Send crash report to the developer</string>
+  <string name="ask_to_report_crash">Sorry, a component of the app had a problem and crashed. Send the log file to the developer through email or Telegram so that the bug can be fixed.</string>
+  <!-- CHAR LIMIT: 10 -->
+  <string name="send_report">Send Report</string>
 
   <!-- Preferences -->
+  <string name="crowdin_comment_break_strings_3" translatable="false">Crowdin comment break</string>
   <string name="pref_main_gps_enabled_key" translatable="false">pref_main_gps_enabled</string>
   <string name="pref_main_network_enabled_key" translatable="false">pref_main_network_enabled</string>
   <string name="pref_main_nlp_enabled_key" translatable="false">pref_main_nlp_enabled</string>
@@ -70,82 +82,92 @@
   <string name="pref_main_locale_key" translatable="false">pref_main_locale</string>
   <string name="pref_main_ask_for_feedback_ts_key" translatable="false">pref_main_ask_for_feedback_ts</string>
   <string name="pref_main_app_launch_count_for_feedback_key" translatable="false">pref_main_app_launch_count_for_feedback</string>
+
   <!-- Menu -->
-  <string name="location_settings_menu_item"  maxLength="15">Location Settings</string>
-  <string name="dark_theme_menu_item" maxLength="15">Dark Theme</string>
-  <string name="language_menu_item" maxLength="15">Language</string>
-  <string name="lang_system_menu_item" maxLength="15">System</string>
-  <string name="lang_en_menu_item" maxLength="15">English</string>
-  <string name="lang_pt_rBr_menu_item" maxLength="15">Portuguese, Brazilian</string>
-  <string name="lang_el_menu_item" maxLength="15">Greek</string>
+  <string name="crowdin_comment_break_strings_4" translatable="false">Crowdin comment break</string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="location_settings_menu_item">Location Settings</string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="dark_theme_menu_item">Dark Theme</string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="language_menu_item">Language</string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="lang_system_menu_item">System</string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="lang_en_menu_item">English</string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="lang_pt_rBr_menu_item">Portuguese, Brazilian</string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="lang_el_menu_item">Greek</string>
   <string name="lang_code_en" translatable="false">en</string>
   <string name="lang_code_pt_rBr" translatable="false">pt|Br</string>
   <string name="lang_code_el" translatable="false">el</string>
-  <string name="donate_menu_item"  maxLength="15">Donate</string>
-  <string name="about_menu_item"  maxLength="15">About</string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="donate_menu_item">Donate</string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="about_menu_item">About</string>
 
   <!-- AboutDialog -->
-  <string name="email_address" translatable="false">mirfatif@gmail.com</string>
+  <string name="crowdin_comment_break_strings_5" translatable="false">Crowdin comment break</string>
+  <string name="email_address" translatable="false">mirfatif.dev@gmail.com</string>
   <string name="play_store_url" translatable="false">https://play.google.com/store/apps/details?id=com.mirfatif.mylocation.ps</string>
-  <string name="email" maxLength="15">Email</string>
-  <string name="telegram_group" maxLength="15">Telegram Group</string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="email">Email</string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="telegram_group">Telegram Group</string>
   <string name="telegram_link" translatable="false">https://t.me/MyLocationApp</string>
-  <string name="source" maxLength="15">Source</string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="source">Source</string>
   <string name="source_url" translatable="false">https://github.com/mirfatif/MyLocation</string>
-  <string name="app_rating" maxLength="15">Rate Me</string>
-  <string name="app_rating_summary" maxLength="20">Rating / review on Play Store</string>
-  <string name="privacy_policy" maxLength="20">Privacy Policy</string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="app_rating">Rate Me</string>
+  <!-- CHAR LIMIT: 20 -->
+  <string name="app_rating_summary">Rating / review on Play Store</string>
+  <!-- CHAR LIMIT: 20 -->
+  <string name="privacy_policy">Privacy Policy</string>
   <string name="privacy_policy_link" translatable="false">https://mirfatif.github.io/MyLocation/privacy_policy.html</string>
-  <string name="translations" maxLength="20">Translations</string>
+  <!-- CHAR LIMIT: 20 -->
+  <string name="translations">Translations</string>
   <string name="translations_summary">Want to see the app in your language?</string>
-  <string name="language_credits">
-    <![CDATA[
-      <b>Portuguese, Brazilian</b>
-      <ul>
-        <li>mezysinc <a href="https://github.com/mezysinc">IMG_SPAN_LINK</a></li>
-      </ul>
-      <br/>
-      <b>Greek</b>
-      <ul>
-        <li>Chris <a href="https://crowdin.com/profile/zernex201">IMG_SPAN_LINK</a></li>
-      </ul>
-      <br/>
-      <a href="https://crowdin.com/project/my-location">Add my language</a>
-    ]]>
-  </string>
-  <string name="share" maxLength="15">Share</string>
+  <string name="language_credits"><![CDATA[<b>Portuguese, Brazilian</b><ul><li>mezysinc <a href="https://github.com/mezysinc">IMG_SPAN_LINK</a></li></ul><br/><b>Greek</b><ul><li>Chris <a href="https://crowdin.com/profile/zernex201">IMG_SPAN_LINK</a></li></ul><br/><a href="https://crowdin.com/project/my-location">Add my language</a>]]></string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="share">Share</string>
   <string name="share_summary">Share the app with others</string>
   <string name="share_text">Check out this amazing app! %s</string>
-  <string name="update" maxLength="15">Update</string>
-  <string name="update_summary" maxLength="20">Check for app updates</string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="update">Update</string>
+  <!-- CHAR LIMIT: 20 -->
+  <string name="update_summary">Check for app updates</string>
   <string name="release_url" translatable="false">https://github.com/mirfatif/MyLocation/releases</string>
 
   <!-- Donate -->
+  <string name="crowdin_comment_break_strings_6" translatable="false">Crowdin comment break</string>
   <string name="send_bitcoin">Send Bitcoins</string>
   <string name="ask_for_bank_account">Ask For Bank Account</string>
   <string name="get_paid_version">Get Paid Version From Play Store</string>
   <string name="bitcoin_address" translatable="false">18ijfsv5fcDKQ6CTe4wycKxZMmti4oUXjW</string>
-  <string name="bank_account_request" translatable="false">Hello,\n\nI need your IBAN and SWIFT/BIC
-    to make a donation.
-  </string>
+  <string name="bank_account_request" translatable="false">Hello,\n\nI need your IBAN and SWIFT/BIC to make a donation.</string>
 
   <!-- Feedback -->
-  <string name="yes" maxLength="10">Yes</string>
-  <string name="no" maxLength="10">No</string>
-  <string name="do_not_ask" maxLength="15">Don\'t ask again</string>
-  <string name="i_will" maxLength="10">I Will</string>
-  <string name="rate" maxLength="10">Rate now</string>
-  <string name="contact" maxLength="10">Write Now</string>
-  <string name="love_using_app" maxLength="20">Liking My Location?</string>
-  <string name="rate_the_app">Good ratings and reviews help us improve the app and we are able to
-    better serve your needs.
-  </string>
-  <string name="purchase_and_rate_the_app">You can help us improve the app by making a small donation
-    or leaving a good app review so that we are able to better serve your needs.
-  </string>
-  <string name="ask_to_provide_feedback">Sorry to hear that. You can help improve the app by
-    contacting us via email or Telegram so that we are able to better serve your needs.
-  </string>
-  <string name="thank_you" maxLength="20">Thank you</string>
+  <string name="crowdin_comment_break_strings_7" translatable="false">Crowdin comment break</string>
+  <!-- CHAR LIMIT: 10 -->
+  <string name="yes">Yes</string>
+  <!-- CHAR LIMIT: 10 -->
+  <string name="no">No</string>
+  <!-- CHAR LIMIT: 15 -->
+  <string name="do_not_ask">Don\'t ask again</string>
+  <!-- CHAR LIMIT: 10 -->
+  <string name="i_will">I Will</string>
+  <!-- CHAR LIMIT: 10 -->
+  <string name="rate">Rate now</string>
+  <!-- CHAR LIMIT: 10 -->
+  <string name="contact">Write Now</string>
+  <!-- CHAR LIMIT: 20 -->
+  <string name="love_using_app">Liking My Location?</string>
+  <string name="rate_the_app">Good ratings and reviews help us improve the app and we are able to better serve your needs.</string>
+  <string name="purchase_and_rate_the_app">You can help us improve the app by making a small donation or leaving a good app review so that we are able to better serve your needs.</string>
+  <string name="ask_to_provide_feedback">Sorry to hear that. You can help improve the app by contacting us via email or Telegram so that we are able to better serve your needs.</string>
+  <!-- CHAR LIMIT: 20 -->
+  <string name="thank_you">Thank you</string>
 
 </resources>

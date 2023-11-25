@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
+import com.mirfatif.mylocation.util.Utils;
 import java.util.concurrent.Future;
 import org.microg.nlp.api.LocationBackend;
 import org.microg.nlp.api.LocationBackend.Stub;
@@ -89,7 +90,6 @@ public class NlpBackend {
     return mInitIntent != null;
   }
 
-  // org.microg.nlp.ui.AbstractBackendPreference.java
   void openInitActivity(MainActivity activity) {
     String initClass = null;
     Bundle metaData = mInfo.metaData;
@@ -134,7 +134,7 @@ public class NlpBackend {
         mLoc = loc;
       }
     } catch (Exception e) {
-      Log.e(TAG, mLabel + ": " + e.toString());
+      Log.e(TAG, mLabel + ": " + e);
       cleanUp();
     }
   }
@@ -153,7 +153,7 @@ public class NlpBackend {
       try {
         mSvc.close();
       } catch (Exception e) {
-        Log.e(TAG, mLabel + ": cleanUp: " + e.toString());
+        Log.e(TAG, mLabel + ": cleanUp: " + e);
       }
       mSvc = null;
     }
@@ -169,9 +169,8 @@ public class NlpBackend {
   private LocationBackend mSvc;
   private boolean mConnected = false;
 
-  // org.microg.nlp.location.BackendHelper.java
   private class SvcConnection implements ServiceConnection {
-    @Override
+
     public void onServiceConnected(ComponentName name, IBinder service) {
       mInitialized = true;
       mSvc = Stub.asInterface(service);
@@ -181,7 +180,7 @@ public class NlpBackend {
         mInitIntent = mSvc.getInitIntent();
         Utils.runBg(NlpBackend.this::updateLoc);
       } catch (Exception e) {
-        Log.e(TAG, mLabel + ": onServiceConnected: " + e.toString());
+        Log.e(TAG, mLabel + ": onServiceConnected: " + e);
         if (!(e instanceof RemoteException) && !(e instanceof SecurityException)) {
           e.printStackTrace();
         }
@@ -189,17 +188,14 @@ public class NlpBackend {
       }
     }
 
-    @Override
     public void onServiceDisconnected(ComponentName name) {
       mConnected = false;
     }
 
-    @Override
     public void onBindingDied(ComponentName name) {
       cleanUp();
     }
 
-    @Override
     public void onNullBinding(ComponentName name) {
       cleanUp();
     }
@@ -207,7 +203,6 @@ public class NlpBackend {
 
   private class Callback extends LocationCallback.Stub {
 
-    @Override
     public void report(Location location) {
       mLoc = location;
     }

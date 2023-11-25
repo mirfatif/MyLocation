@@ -7,20 +7,20 @@ import static android.os.Build.VERSION.SDK_INT;
 import static com.mirfatif.mylocation.GpsSvc.ACTION_STOP_SERVICE;
 import static com.mirfatif.mylocation.GpsSvc.MIN_DELAY;
 import static com.mirfatif.mylocation.MySettings.SETTINGS;
-import static com.mirfatif.mylocation.Utils.copyLoc;
-import static com.mirfatif.mylocation.Utils.hasCoarseLocPerm;
-import static com.mirfatif.mylocation.Utils.hasFineLocPerm;
-import static com.mirfatif.mylocation.Utils.isNaN;
-import static com.mirfatif.mylocation.Utils.openMap;
-import static com.mirfatif.mylocation.Utils.setNightTheme;
+import static com.mirfatif.mylocation.util.Utils.copyLoc;
+import static com.mirfatif.mylocation.util.Utils.hasCoarseLocPerm;
+import static com.mirfatif.mylocation.util.Utils.hasFineLocPerm;
+import static com.mirfatif.mylocation.util.Utils.isNaN;
+import static com.mirfatif.mylocation.util.Utils.openMap;
+import static com.mirfatif.mylocation.util.Utils.setNightTheme;
 import static org.microg.nlp.api.Constants.ACTION_LOCATION_BACKEND;
 
 import android.Manifest.permission;
-import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+import android.location.GnssStatus;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
 import android.location.Location;
@@ -34,7 +34,6 @@ import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
@@ -46,6 +45,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.mirfatif.mylocation.NlpAdapter.NlpClickListener;
 import com.mirfatif.mylocation.databinding.ActivityMainBinding;
+import com.mirfatif.mylocation.util.NotifUtils;
+import com.mirfatif.mylocation.util.Utils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -60,11 +61,10 @@ public class MainActivity extends AppCompatActivity {
   private final LocationManager mLocManager =
       (LocationManager) App.getCxt().getSystemService(Context.LOCATION_SERVICE);
 
-  private LicenseVerifierFlav mLicenseVerifier;
+  private LicenseVerifier mLicenseVerifier;
   private boolean mGpsProviderSupported = false;
   private boolean mNetProviderSupported = false;
 
-  @Override
   protected void onCreate(Bundle savedInstanceState) {
     setTheme(R.style.AppTheme);
     super.onCreate(savedInstanceState);
@@ -99,14 +99,13 @@ public class MainActivity extends AppCompatActivity {
 
     mB.grantPerm.setOnClickListener(v -> Utils.openAppSettings(this, getPackageName()));
 
-    mLicenseVerifier = new LicenseVerifierFlav(this);
+    mLicenseVerifier = new LicenseVerifier(this);
 
     if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
       SETTINGS.plusAppLaunchCount();
     }
   }
 
-  @Override
   protected void onStart() {
     super.onStart();
     startLocListeners();
@@ -114,20 +113,17 @@ public class MainActivity extends AppCompatActivity {
     setGrantPermButtonState();
   }
 
-  @Override
   protected void onStop() {
     stopTimer();
     stopLocListeners();
     super.onStop();
   }
 
-  @Override
   protected void onResume() {
     super.onResume();
     checkLicense();
   }
 
-  @Override
   protected void onDestroy() {
     if (mLicenseVerifier != null) {
       mLicenseVerifier.onDestroy();
@@ -135,8 +131,7 @@ public class MainActivity extends AppCompatActivity {
     super.onDestroy();
   }
 
-  @Override
-  protected void onSaveInstanceState(@NonNull Bundle outState) {
+  protected void onSaveInstanceState(Bundle outState) {
     FragmentManager fm = getSupportFragmentManager();
     Fragment frag = fm.findFragmentByTag(SATS_DIALOG_TAG);
     if (frag != null) {
@@ -145,18 +140,15 @@ public class MainActivity extends AppCompatActivity {
     super.onSaveInstanceState(outState);
   }
 
-  @Override
   public void onBackPressed() {
     if (VERSION.SDK_INT == VERSION_CODES.Q) {
-      // Bug: https://issuetracker.google.com/issues/139738913
+
       finishAfterTransition();
     } else {
       super.onBackPressed();
     }
   }
 
-  @SuppressLint("RestrictedApi")
-  @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.main_overflow, menu);
     MenuCompat.setGroupDividerEnabled(menu, true);
@@ -174,13 +166,12 @@ public class MainActivity extends AppCompatActivity {
       menu.findItem(R.id.action_locale_system).setChecked(true);
     }
     menu.findItem(R.id.action_dark_theme).setChecked(SETTINGS.getForceDarkMode());
-    if (BuildConfig.IS_PS) {
+    if (Utils.isPsProVersion()) {
       menu.findItem(R.id.action_donate).setVisible(false);
     }
     return true;
   }
 
-  @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     int itemId = item.getItemId();
     if (itemId == R.id.action_loc_settings) {
@@ -205,10 +196,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (locale != null) {
           SETTINGS.setLocale(locale);
-          /*
-           Nlp backends bind to services using App context. So they must be
-           unregistered before creating new App context.
-          */
+
           stopNlpBackends();
           App.updateContext();
           recreate();
@@ -232,14 +220,9 @@ public class MainActivity extends AppCompatActivity {
     return super.onOptionsItemSelected(item);
   }
 
-  @Override
   protected void attachBaseContext(Context context) {
     super.attachBaseContext(Utils.setLocale(context));
   }
-
-  //////////////////////////////////////////////////////////////////
-  ////////////////////////// LOC PROVIDERS /////////////////////////
-  //////////////////////////////////////////////////////////////////
 
   private void setupGps() {
     if (!mGpsProviderSupported) {
@@ -250,13 +233,16 @@ public class MainActivity extends AppCompatActivity {
     mB.lockGps.setOnClickListener(
         v -> {
           if (mB.lockGps.isChecked()) {
-            Intent intent = new Intent(App.getCxt(), GpsSvc.class);
-            // If startForeground() in Service is called on UI thread, it won't show notification
-            // unless Service is started with startForegroundService().
-            if (SDK_INT >= VERSION_CODES.O) {
-              startForegroundService(intent);
+            if (NotifUtils.hasNotifPerm()) {
+              Intent intent = new Intent(App.getCxt(), GpsSvc.class);
+
+              if (SDK_INT >= VERSION_CODES.O) {
+                startForegroundService(intent);
+              } else {
+                startService(intent);
+              }
             } else {
-              startService(intent);
+              Utils.showToast(R.string.perm_not_granted);
             }
           } else {
             startService(new Intent(App.getCxt(), GpsSvc.class).setAction(ACTION_STOP_SERVICE));
@@ -266,7 +252,6 @@ public class MainActivity extends AppCompatActivity {
     mB.gpsCont.map.setOnClickListener(v -> openMap(this, mGpsLocation));
     mB.gpsCont.copy.setOnClickListener(v -> copyLoc(mGpsLocation));
 
-    // setOnCheckedChangeListener() doesn't work well on screen rotation.
     mB.gpsCont.switchV.setOnClickListener(
         v -> {
           if (SETTINGS.getGpsEnabled() != mB.gpsCont.switchV.isChecked()) {
@@ -337,17 +322,15 @@ public class MainActivity extends AppCompatActivity {
     mNlpAdapter =
         new NlpAdapter(
             new NlpClickListener() {
-              @Override
+
               public void mapClicked(Location loc) {
                 openMap(MainActivity.this, loc);
               }
 
-              @Override
               public void copyClicked(Location loc) {
                 copyLoc(loc);
               }
 
-              @Override
               public void settingsClicked(NlpBackend backend) {
                 Utils.openAppSettings(MainActivity.this, backend.getPkgName());
                 backend.openInitActivity(MainActivity.this);
@@ -370,8 +353,8 @@ public class MainActivity extends AppCompatActivity {
 
   private LocListener mGpsLocListener;
   private GpsStatus.Listener mGpsStatusListener;
+  private GnssStatus.Callback mGnssStatusCallback;
 
-  @SuppressLint("MissingPermission")
   private void startGpsLocListener() {
     synchronized (LOC_LISTENER_LOCK) {
       stopGpsLocListener();
@@ -379,14 +362,18 @@ public class MainActivity extends AppCompatActivity {
         mGpsLocListener = new LocListener(true);
         mLocManager.requestLocationUpdates(GPS_PROVIDER, MIN_DELAY, 0, mGpsLocListener);
         mGpsStatusListener = new GpsStatusListener();
-        mLocManager.addGpsStatusListener(mGpsStatusListener);
+        if (SDK_INT >= VERSION_CODES.N) {
+          mGnssStatusCallback = new LocCallback();
+          mLocManager.registerGnssStatusCallback(mGnssStatusCallback);
+        } else {
+          mLocManager.addGpsStatusListener(mGpsStatusListener);
+        }
       }
     }
   }
 
   private LocListener mNetLocListener;
 
-  @SuppressLint("MissingPermission")
   private void startNetLocListener() {
     synchronized (LOC_LISTENER_LOCK) {
       stopNetLocListener();
@@ -423,8 +410,13 @@ public class MainActivity extends AppCompatActivity {
         mGpsLocListener = null;
       }
       if (mGpsStatusListener != null) {
-        mLocManager.removeGpsStatusListener(mGpsStatusListener);
+        if (SDK_INT >= VERSION_CODES.N) {
+          mLocManager.unregisterGnssStatusCallback(mGnssStatusCallback);
+        } else {
+          mLocManager.removeGpsStatusListener(mGpsStatusListener);
+        }
         mGpsStatusListener = null;
+        mGnssStatusCallback = null;
       }
       clearGpsData();
     }
@@ -455,24 +447,26 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  //////////////////////////////////////////////////////////////////
-  /////////////////////////////// UI //////////////////////////////
-  //////////////////////////////////////////////////////////////////
-
   private final List<Sat> mSats = new ArrayList<>();
   private final ReentrantLock UPDATE_SATS_LOCK = new ReentrantLock();
 
-  @SuppressLint("MissingPermission")
-  private void updateGpsSats() {
+  private void updateGpsSats(GnssStatus status) {
     if (!UPDATE_SATS_LOCK.tryLock()) {
       return;
     }
     if (hasFineLocPerm()) {
-      GpsStatus gpsStatus = mLocManager.getGpsStatus(null);
       synchronized (mSats) {
-        mSats.clear();
-        for (GpsSatellite gpsSat : gpsStatus.getSatellites()) {
-          mSats.add(new Sat(gpsSat.getPrn(), gpsSat.usedInFix(), gpsSat.getSnr()));
+        GpsStatus gpsStatus;
+        if (SDK_INT >= VERSION_CODES.N) {
+          mSats.clear();
+          for (int i = 0; i < status.getSatelliteCount(); i++) {
+            mSats.add(new Sat(status.getSvid(i), status.usedInFix(i), status.getCn0DbHz(i)));
+          }
+        } else if ((gpsStatus = mLocManager.getGpsStatus(null)) != null) {
+          mSats.clear();
+          for (GpsSatellite gpsSat : gpsStatus.getSatellites()) {
+            mSats.add(new Sat(gpsSat.getPrn(), gpsSat.usedInFix(), gpsSat.getSnr()));
+          }
         }
         Collections.sort(mSats, (s1, s2) -> Float.compare(s2.mSnr, s1.mSnr));
       }
@@ -495,7 +489,7 @@ public class MainActivity extends AppCompatActivity {
     mTimer = new Timer();
     mTimer.scheduleAtFixedRate(
         new TimerTask() {
-          @Override
+
           public void run() {
             Utils.runUi(MainActivity.this, () -> updateUi());
             mTickCount++;
@@ -636,7 +630,6 @@ public class MainActivity extends AppCompatActivity {
     mB.netCont.timeV.setText(time);
   }
 
-  @SuppressLint("NotifyDataSetChanged")
   private void updateNlpUi() {
     boolean hasLocPerm = hasCoarseLocPerm();
     mB.nlpCont.switchV.setEnabled(hasLocPerm);
@@ -677,10 +670,6 @@ public class MainActivity extends AppCompatActivity {
     mSatsDialog.submitList(mSats);
   }
 
-  //////////////////////////////////////////////////////////////////
-  /////////////////////////// PERM REQUEST /////////////////////////
-  //////////////////////////////////////////////////////////////////
-
   private void checkPerms() {
     List<String> perms = new ArrayList<>();
     if (!hasFineLocPerm()) {
@@ -689,14 +678,16 @@ public class MainActivity extends AppCompatActivity {
     if (!hasCoarseLocPerm()) {
       perms.add(permission.ACCESS_COARSE_LOCATION);
     }
+    if (!NotifUtils.hasNotifPerm()) {
+      perms.add(permission.POST_NOTIFICATIONS);
+    }
     if (!perms.isEmpty()) {
       ActivityCompat.requestPermissions(this, perms.toArray(new String[] {}), 0);
     }
   }
 
-  @Override
   public void onRequestPermissionsResult(
-      int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+      int requestCode, String[] permissions, int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     List<Integer> results = new ArrayList<>();
     for (int i : grantResults) {
@@ -708,10 +699,6 @@ public class MainActivity extends AppCompatActivity {
       setTimer();
     }
   }
-
-  //////////////////////////////////////////////////////////////////
-  ////////////////////////////// OTHER /////////////////////////////
-  //////////////////////////////////////////////////////////////////
 
   void checkLicense() {
     if (mLicenseVerifier != null) {
@@ -737,7 +724,6 @@ public class MainActivity extends AppCompatActivity {
       mIsGps = isGps;
     }
 
-    @Override
     public void onLocationChanged(Location location) {
       if (mIsGps) {
         mGpsLocation = location;
@@ -746,12 +732,10 @@ public class MainActivity extends AppCompatActivity {
       }
     }
 
-    @Override
     public void onProviderEnabled(String provider) {
       setTimer();
     }
 
-    @Override
     public void onProviderDisabled(String provider) {
       if (mIsGps) {
         clearGpsData();
@@ -761,7 +745,6 @@ public class MainActivity extends AppCompatActivity {
       setTimer();
     }
 
-    @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
       setTimer();
     }
@@ -769,9 +752,15 @@ public class MainActivity extends AppCompatActivity {
 
   private class GpsStatusListener implements GpsStatus.Listener {
 
-    @Override
     public void onGpsStatusChanged(int event) {
-      Utils.runBg(MainActivity.this::updateGpsSats);
+      Utils.runBg(() -> MainActivity.this.updateGpsSats(null));
+    }
+  }
+
+  private class LocCallback extends GnssStatus.Callback {
+
+    public void onSatelliteStatusChanged(GnssStatus status) {
+      Utils.runBg(() -> updateGpsSats(status));
     }
   }
 
@@ -798,10 +787,6 @@ public class MainActivity extends AppCompatActivity {
     static float maxSnr;
     private static float minSnr, correction;
   }
-
-  //////////////////////////////////////////////////////////////////
-  ////////////////////////// FOR SUBCLASSES ////////////////////////
-  //////////////////////////////////////////////////////////////////
 
   ActivityMainBinding getRootView() {
     return mB;
