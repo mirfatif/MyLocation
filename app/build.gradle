@@ -11,8 +11,8 @@ android {
 
     defaultConfig {
         applicationId namespace
-        versionCode 105
-        versionName "v1.05"
+        versionCode 106
+        versionName "v1.06"
     }
 
     flavorDimensions.addAll('type', 'version')

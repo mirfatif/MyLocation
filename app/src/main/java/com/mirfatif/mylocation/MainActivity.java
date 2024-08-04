@@ -647,7 +647,7 @@ public class MainActivity extends AppCompatActivity {
 
   private void setGrantPermButtonState() {
     if (mB != null) {
-      if (hasFineLocPerm() && hasCoarseLocPerm()) {
+      if (hasFineLocPerm() && hasCoarseLocPerm() && NotifUtils.hasNotifPerm()) {
         mB.grantPerm.setVisibility(View.GONE);
       } else {
         mB.grantPerm.setVisibility(View.VISIBLE);
