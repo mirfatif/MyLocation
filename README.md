@@ -9,6 +9,8 @@ Know your geo coordinates using on-device GPS and Network location providers
 
 <sup>* Join [Telegram support group](https://t.me/MyLocationApp) to get instant updates and test beta releases.</sup>
 
+Note: Pro releases are not FOSS.
+
 ## Features
 
 My Location finds your device's location in the following ways:
