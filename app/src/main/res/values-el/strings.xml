@@ -32,8 +32,6 @@
   <!-- CHAR LIMIT: 20 -->
   <string name="no_maps_installed">Όχι εφαρμογή χάρτη</string>
   <!-- CHAR LIMIT: 20 -->
-  <string name="no_bitcoin_app_installed">Όχι πορτοφόλι Bitcoi</string>
-  <!-- CHAR LIMIT: 20 -->
   <string name="failed_open_loc_settings">Λάθος με ρυθμ. θεσης</string>
   <!-- CHAR LIMIT: 20 -->
   <string name="failed_open_app_settings">Λάθος ανοίγμα ρυθμίσ</string>
@@ -41,16 +39,6 @@
   <string name="cleared">Καθαρίστηκε</string>
   <!-- CHAR LIMIT: 20 -->
   <string name="copied">Αντιγράφηκε</string>
-  <!-- Notification Channels -->
-  <string name="channel_gps_lock">GPS</string>
-  <string name="channel_crash_report">Αναφορά Σφάλματος</string>
-  <!-- Notification -->
-  <!-- CHAR LIMIT: 15 -->
-  <string name="crash_report">Αναφορά Σφάλματος</string>
-  <!-- CHAR LIMIT: 30 -->
-  <string name="ask_to_report_crash_small">Αποστολή αναφοράς σε developer</string>
-  <!-- CHAR LIMIT: 10 -->
-  <string name="send_report">Αποστ Αναφ</string>
   <!-- Preferences -->
   <!-- Menu -->
   <!-- CHAR LIMIT: 15 -->
@@ -68,8 +56,6 @@
   <!-- CHAR LIMIT: 15 -->
   <string name="lang_el_menu_item">Ελληνικά</string>
   <!-- CHAR LIMIT: 15 -->
-  <string name="donate_menu_item">Δωρεά</string>
-  <!-- CHAR LIMIT: 15 -->
   <string name="about_menu_item">Σχετικά</string>
   <!-- AboutDialog -->
   <!-- CHAR LIMIT: 15 -->
@@ -79,41 +65,7 @@
   <!-- CHAR LIMIT: 15 -->
   <string name="source">Πηγή</string>
   <!-- CHAR LIMIT: 15 -->
-  <string name="app_rating">Αξιολογήστε Με</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="app_rating_summary">Αξιολ στο Play Store</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="privacy_policy">Πολιτική Απορρήτου</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="translations">Μεταφράσεις</string>
-  <string name="translations_summary">Want to see the app in your language?</string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="share">Κοινοποίηση</string>
-  <string name="share_summary">Μοιραστείτε την εφαρμογή με άλλους</string>
-  <string name="share_text">Δείτε αυτή την καταπληκτική εφαρμογή! %s</string>
-  <!-- CHAR LIMIT: 15 -->
   <string name="update">Ενημέρωση</string>
   <!-- CHAR LIMIT: 20 -->
   <string name="update_summary">Έλεγχος ενημερώσεων</string>
-  <!-- Donate -->
-  <string name="send_bitcoin">Αποστολή Bitcoin</string>
-  <string name="ask_for_bank_account">Ζητήστε Τραπεζικό Λογαριασμό</string>
-  <string name="get_paid_version">Λήψη Πληρωμένης Έκδοσης Από Το Play Store</string>
-  <!-- Feedback -->
-  <!-- CHAR LIMIT: 10 -->
-  <string name="yes">Ναι</string>
-  <!-- CHAR LIMIT: 10 -->
-  <string name="no">Όχι</string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="do_not_ask">Μη ερωτηθώ ξανά</string>
-  <!-- CHAR LIMIT: 10 -->
-  <string name="i_will">Θα</string>
-  <!-- CHAR LIMIT: 10 -->
-  <string name="rate">Αξιολ τώρα</string>
-  <!-- CHAR LIMIT: 10 -->
-  <string name="contact">Γράψε Τώρα</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="love_using_app">Aρέσει το MyLocation</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="thank_you">Σας ευχαριστούμε</string>
 </resources>

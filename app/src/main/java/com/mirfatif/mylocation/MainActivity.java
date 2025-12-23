@@ -26,6 +26,7 @@ import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -34,17 +35,22 @@ import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.MenuCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.mirfatif.mylocation.NlpAdapter.NlpClickListener;
 import com.mirfatif.mylocation.databinding.ActivityMainBinding;
+import com.mirfatif.mylocation.databinding.StatusBarBgContBinding;
 import com.mirfatif.mylocation.util.NotifUtils;
 import com.mirfatif.mylocation.util.Utils;
 import java.util.ArrayList;
@@ -61,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
   private final LocationManager mLocManager =
       (LocationManager) App.getCxt().getSystemService(Context.LOCATION_SERVICE);
 
-  private LicenseVerifier mLicenseVerifier;
   private boolean mGpsProviderSupported = false;
   private boolean mNetProviderSupported = false;
 
@@ -72,7 +77,43 @@ public class MainActivity extends AppCompatActivity {
       return;
     }
     mB = ActivityMainBinding.inflate(getLayoutInflater());
-    setContentView(mB.getRoot());
+
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+      setContentView(mB.getRoot());
+    } else {
+      var cont = StatusBarBgContBinding.inflate(getLayoutInflater());
+      setContentView(cont.getRoot());
+      cont.getRoot().addView(mB.getRoot(), cont.getRoot().getLayoutParams());
+
+      WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView())
+          .setAppearanceLightStatusBars(false);
+
+      ViewCompat.setOnApplyWindowInsetsListener(
+          cont.getRoot(),
+          (v, insets) -> {
+            var type =
+                WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout();
+            var ins = insets.getInsets(type);
+
+            var mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            mlp.leftMargin = ins.left;
+            mlp.bottomMargin = ins.bottom;
+            mlp.rightMargin = ins.right;
+
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+              var lp = cont.statusBarBg.getLayoutParams();
+              lp.height = ins.top;
+              cont.statusBarBg.setLayoutParams(lp);
+            } else {
+              mlp.topMargin = ins.top;
+            }
+
+            v.setLayoutParams(mlp);
+
+            return WindowInsetsCompat.CONSUMED;
+          });
+    }
 
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) {
@@ -99,8 +140,6 @@ public class MainActivity extends AppCompatActivity {
 
     mB.grantPerm.setOnClickListener(v -> Utils.openAppSettings(this, getPackageName()));
 
-    mLicenseVerifier = new LicenseVerifier(this);
-
     if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
       SETTINGS.plusAppLaunchCount();
     }
@@ -119,18 +158,6 @@ public class MainActivity extends AppCompatActivity {
     super.onStop();
   }
 
-  protected void onResume() {
-    super.onResume();
-    checkLicense();
-  }
-
-  protected void onDestroy() {
-    if (mLicenseVerifier != null) {
-      mLicenseVerifier.onDestroy();
-    }
-    super.onDestroy();
-  }
-
   protected void onSaveInstanceState(Bundle outState) {
     FragmentManager fm = getSupportFragmentManager();
     Fragment frag = fm.findFragmentByTag(SATS_DIALOG_TAG);
@@ -142,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
 
   public void onBackPressed() {
     if (VERSION.SDK_INT == VERSION_CODES.Q) {
-
       finishAfterTransition();
     } else {
       super.onBackPressed();
@@ -166,9 +192,6 @@ public class MainActivity extends AppCompatActivity {
       menu.findItem(R.id.action_locale_system).setChecked(true);
     }
     menu.findItem(R.id.action_dark_theme).setChecked(SETTINGS.getForceDarkMode());
-    if (Utils.isPsProVersion()) {
-      menu.findItem(R.id.action_donate).setVisible(false);
-    }
     return true;
   }
 
@@ -207,10 +230,6 @@ public class MainActivity extends AppCompatActivity {
     if (itemId == R.id.action_dark_theme) {
       SETTINGS.setForceDarkMode(!item.isChecked());
       setNightTheme(this);
-      return true;
-    }
-    if (itemId == R.id.action_donate) {
-      DonateDialogFragment.show(this);
       return true;
     }
     if (itemId == R.id.action_about) {
@@ -513,7 +532,7 @@ public class MainActivity extends AppCompatActivity {
   private Location mGpsLocation, mNetLocation;
 
   private void updateUi() {
-    if (mB != null && mLicenseVerifier != null && mLicenseVerifier.isVerified()) {
+    if (mB != null) {
       updateGpsUi();
       updateNetUi();
       updateNlpUi();
@@ -700,12 +719,6 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  void checkLicense() {
-    if (mLicenseVerifier != null) {
-      mLicenseVerifier.check();
-    }
-  }
-
   private void clearAGPSData() {
     if (hasFineLocPerm()) {
       mLocManager.sendExtraCommand(GPS_PROVIDER, "delete_aiding_data", null);
@@ -786,9 +799,5 @@ public class MainActivity extends AppCompatActivity {
 
     static float maxSnr;
     private static float minSnr, correction;
-  }
-
-  ActivityMainBinding getRootView() {
-    return mB;
   }
 }

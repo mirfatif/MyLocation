@@ -2,8 +2,6 @@
 <resources>
 
   <color name="dynamicText">@android:color/white</color>
-  <color name="dynamicFg">@android:color/black</color>
   <color name="dynamicFgDim">#BFBFBF</color>
-  <color name="dynamicBg">#303030</color>
 
 </resources>

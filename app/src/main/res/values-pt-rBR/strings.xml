@@ -32,8 +32,6 @@
   <!-- CHAR LIMIT: 20 -->
   <string name="no_maps_installed">Nenhum app de mapas</string>
   <!-- CHAR LIMIT: 20 -->
-  <string name="no_bitcoin_app_installed">Nenhum Bitcoin Wallet instalado</string>
-  <!-- CHAR LIMIT: 20 -->
   <string name="failed_open_loc_settings">Falha ao abrir as configurações de localização</string>
   <!-- CHAR LIMIT: 20 -->
   <string name="failed_open_app_settings">Falha ao abrir as configurações do App</string>
@@ -43,15 +41,6 @@
   <string name="copied">Copiado</string>
   <!-- Notification Channels -->
   <string name="channel_gps_lock">GPS</string>
-  <string name="channel_crash_report">Relatório de falha</string>
-  <!-- Notification -->
-  <!-- CHAR LIMIT: 15 -->
-  <string name="crash_report">Relatório de falha</string>
-  <!-- CHAR LIMIT: 30 -->
-  <string name="ask_to_report_crash_small">Enviar relatório de falha ao desenvolvedor</string>
-  <!-- CHAR LIMIT: 10 -->
-  <string name="send_report">Enviar relatório</string>
-  <!-- Preferences -->
   <!-- Menu -->
   <!-- CHAR LIMIT: 15 -->
   <string name="location_settings_menu_item">Configurações de localização</string>
@@ -68,8 +57,6 @@
   <!-- CHAR LIMIT: 15 -->
   <string name="lang_el_menu_item">Grego</string>
   <!-- CHAR LIMIT: 15 -->
-  <string name="donate_menu_item">Doar</string>
-  <!-- CHAR LIMIT: 15 -->
   <string name="about_menu_item">Sobre</string>
   <!-- AboutDialog -->
   <!-- CHAR LIMIT: 15 -->
@@ -79,41 +66,7 @@
   <!-- CHAR LIMIT: 15 -->
   <string name="source">Fonte</string>
   <!-- CHAR LIMIT: 15 -->
-  <string name="app_rating">Avaliar</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="app_rating_summary">Avaliação / resenha na Play Store</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="privacy_policy">Política de Privacidade</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="translations">Traduções</string>
-  <string name="translations_summary">Quer ver o App no seu idioma?</string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="share">Compartilhar</string>
-  <string name="share_summary">Compartilhar o App com outros</string>
-  <string name="share_text">Confira este App incrível! %s</string>
-  <!-- CHAR LIMIT: 15 -->
   <string name="update">Atualizar</string>
   <!-- CHAR LIMIT: 20 -->
   <string name="update_summary">Verificar por atualizações do App</string>
-  <!-- Donate -->
-  <string name="send_bitcoin">Enviar Bitcoins</string>
-  <string name="ask_for_bank_account">Perguntar por conta bancária</string>
-  <string name="get_paid_version">Baixe a versão paga da Play Store</string>
-  <!-- Feedback -->
-  <!-- CHAR LIMIT: 10 -->
-  <string name="yes">Sim</string>
-  <!-- CHAR LIMIT: 10 -->
-  <string name="no">Não</string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="do_not_ask">Não pr. de novo</string>
-  <!-- CHAR LIMIT: 10 -->
-  <string name="i_will">Ok</string>
-  <!-- CHAR LIMIT: 10 -->
-  <string name="rate">Avaliar</string>
-  <!-- CHAR LIMIT: 10 -->
-  <string name="contact">Faça agora</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="love_using_app">Gostando do App?</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="thank_you">Obrigado</string>
 </resources>

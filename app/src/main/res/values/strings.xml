@@ -2,8 +2,6 @@
 
   <string name="app_name" translatable="false">My Location</string>
 
-  <string name="img_span_link" translatable="false">IMG_SPAN_LINK</string>
-
   <string name="gps">GPS</string>
   <string name="network">Network</string>
   <string name="unified_nlp_backends">UnifiedNLP Backends</string>
@@ -44,8 +42,6 @@
   <!-- CHAR LIMIT: 20 -->
   <string name="no_maps_installed">No maps app installed</string>
   <!-- CHAR LIMIT: 20 -->
-  <string name="no_bitcoin_app_installed">Bitcoin Wallet app not found</string>
-  <!-- CHAR LIMIT: 20 -->
   <string name="failed_open_loc_settings">Failed to open location settings</string>
   <!-- CHAR LIMIT: 20 -->
   <string name="failed_open_app_settings">Failed to open app settings</string>
@@ -58,29 +54,14 @@
   <string name="crowdin_comment_break_strings_1" translatable="false">Crowdin comment break</string>
   <string name="channel_gps_lock">GPS</string>
   <integer name="channel_gps_lock">100</integer>
-  <string name="channel_crash_report">Crash Report</string>
-  <integer name="channel_crash_report">200</integer>
-
-  <!-- Notification -->
-  <string name="crowdin_comment_break_strings_2" translatable="false">Crowdin comment break</string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="crash_report">Crash Report</string>
-  <!-- CHAR LIMIT: 30 -->
-  <string name="ask_to_report_crash_small">Send crash report to the developer</string>
-  <string name="ask_to_report_crash">Sorry, a component of the app had a problem and crashed. Send the log file to the developer through email or Telegram so that the bug can be fixed.</string>
-  <!-- CHAR LIMIT: 10 -->
-  <string name="send_report">Send Report</string>
 
   <!-- Preferences -->
   <string name="crowdin_comment_break_strings_3" translatable="false">Crowdin comment break</string>
   <string name="pref_main_gps_enabled_key" translatable="false">pref_main_gps_enabled</string>
   <string name="pref_main_network_enabled_key" translatable="false">pref_main_network_enabled</string>
   <string name="pref_main_nlp_enabled_key" translatable="false">pref_main_nlp_enabled</string>
-  <string name="pref_main_crash_report_count_key" translatable="false">pref_main_crash_report_count</string>
-  <string name="pref_main_crash_report_ts_key" translatable="false">pref_main_crash_report_ts</string>
   <string name="pref_main_dark_theme_key" translatable="false">pref_main_dark_theme</string>
   <string name="pref_main_locale_key" translatable="false">pref_main_locale</string>
-  <string name="pref_main_ask_for_feedback_ts_key" translatable="false">pref_main_ask_for_feedback_ts</string>
   <string name="pref_main_app_launch_count_for_feedback_key" translatable="false">pref_main_app_launch_count_for_feedback</string>
 
   <!-- Menu -->
@@ -103,14 +84,11 @@
   <string name="lang_code_pt_rBr" translatable="false">pt|Br</string>
   <string name="lang_code_el" translatable="false">el</string>
   <!-- CHAR LIMIT: 15 -->
-  <string name="donate_menu_item">Donate</string>
-  <!-- CHAR LIMIT: 15 -->
   <string name="about_menu_item">About</string>
 
   <!-- AboutDialog -->
   <string name="crowdin_comment_break_strings_5" translatable="false">Crowdin comment break</string>
   <string name="email_address" translatable="false">mirfatif.dev@gmail.com</string>
-  <string name="play_store_url" translatable="false">https://play.google.com/store/apps/details?id=com.mirfatif.mylocation.ps</string>
   <!-- CHAR LIMIT: 15 -->
   <string name="email">Email</string>
   <!-- CHAR LIMIT: 15 -->
@@ -120,54 +98,9 @@
   <string name="source">Source</string>
   <string name="source_url" translatable="false">https://github.com/mirfatif/MyLocation</string>
   <!-- CHAR LIMIT: 15 -->
-  <string name="app_rating">Rate Me</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="app_rating_summary">Rating / review on Play Store</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="privacy_policy">Privacy Policy</string>
-  <string name="privacy_policy_link" translatable="false">https://mirfatif.github.io/MyLocation/privacy_policy.html</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="translations">Translations</string>
-  <string name="translations_summary">Want to see the app in your language?</string>
-  <string name="language_credits"><![CDATA[<b>Portuguese, Brazilian</b><ul><li>mezysinc <a href="https://github.com/mezysinc">IMG_SPAN_LINK</a></li></ul><br/><b>Greek</b><ul><li>Chris <a href="https://crowdin.com/profile/zernex201">IMG_SPAN_LINK</a></li></ul><br/><a href="https://crowdin.com/project/my-location">Add my language</a>]]></string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="share">Share</string>
-  <string name="share_summary">Share the app with others</string>
-  <string name="share_text">Check out this amazing app! %s</string>
-  <!-- CHAR LIMIT: 15 -->
   <string name="update">Update</string>
   <!-- CHAR LIMIT: 20 -->
   <string name="update_summary">Check for app updates</string>
   <string name="release_url" translatable="false">https://github.com/mirfatif/MyLocation/releases</string>
-
-  <!-- Donate -->
-  <string name="crowdin_comment_break_strings_6" translatable="false">Crowdin comment break</string>
-  <string name="send_bitcoin">Send Bitcoins</string>
-  <string name="ask_for_bank_account">Ask For Bank Account</string>
-  <string name="get_paid_version">Get Paid Version From Play Store</string>
-  <string name="bitcoin_address" translatable="false">18ijfsv5fcDKQ6CTe4wycKxZMmti4oUXjW</string>
-  <string name="bank_account_request" translatable="false">Hello,\n\nI need your IBAN and SWIFT/BIC to make a donation.</string>
-
-  <!-- Feedback -->
-  <string name="crowdin_comment_break_strings_7" translatable="false">Crowdin comment break</string>
-  <!-- CHAR LIMIT: 10 -->
-  <string name="yes">Yes</string>
-  <!-- CHAR LIMIT: 10 -->
-  <string name="no">No</string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="do_not_ask">Don\'t ask again</string>
-  <!-- CHAR LIMIT: 10 -->
-  <string name="i_will">I Will</string>
-  <!-- CHAR LIMIT: 10 -->
-  <string name="rate">Rate now</string>
-  <!-- CHAR LIMIT: 10 -->
-  <string name="contact">Write Now</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="love_using_app">Liking My Location?</string>
-  <string name="rate_the_app">Good ratings and reviews help us improve the app and we are able to better serve your needs.</string>
-  <string name="purchase_and_rate_the_app">You can help us improve the app by making a small donation or leaving a good app review so that we are able to better serve your needs.</string>
-  <string name="ask_to_provide_feedback">Sorry to hear that. You can help improve the app by contacting us via email or Telegram so that we are able to better serve your needs.</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="thank_you">Thank you</string>
 
 </resources>
