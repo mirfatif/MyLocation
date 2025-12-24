@@ -10,8 +10,8 @@ android {
     applicationId = namespace
     minSdk = 21
     targetSdk = 36
-    versionCode = 106
-    versionName = "v1.06"
+    versionCode = 107
+    versionName = "v1.07"
     versionNameSuffix = "-foss"
   }
 
