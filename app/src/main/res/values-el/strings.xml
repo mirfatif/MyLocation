@@ -26,8 +26,6 @@
   <string name="satellites_count">Σύνολο δορυφόρων: %1$d, Καλό: %2$d, Σταθερό: %3$d</string>
   <string name="location">Γεωγραφικό πλάτος (Lat): %1$s, Γεωγραφικό μήκος (Lon): %2$s, Ακρίβεια: %3$s μ</string>
   <!-- CHAR LIMIT: 20 -->
-  <string name="no_email_app_installed">Οχι εφαρμογή e-mail</string>
-  <!-- CHAR LIMIT: 20 -->
   <string name="no_browser_installed">Όχι εφαρμογή browser</string>
   <!-- CHAR LIMIT: 20 -->
   <string name="no_maps_installed">Όχι εφαρμογή χάρτη</string>
@@ -57,15 +55,4 @@
   <string name="lang_el_menu_item">Ελληνικά</string>
   <!-- CHAR LIMIT: 15 -->
   <string name="about_menu_item">Σχετικά</string>
-  <!-- AboutDialog -->
-  <!-- CHAR LIMIT: 15 -->
-  <string name="email">E-mail</string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="telegram_group">Ομάδα Telegram</string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="source">Πηγή</string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="update">Ενημέρωση</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="update_summary">Έλεγχος ενημερώσεων</string>
 </resources>

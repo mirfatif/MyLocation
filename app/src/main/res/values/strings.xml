@@ -36,8 +36,6 @@
   <string name="acc_unit">%s m</string>
 
   <!-- CHAR LIMIT: 20 -->
-  <string name="no_email_app_installed">No email app installed</string>
-  <!-- CHAR LIMIT: 20 -->
   <string name="no_browser_installed">No web browser app installed</string>
   <!-- CHAR LIMIT: 20 -->
   <string name="no_maps_installed">No maps app installed</string>
@@ -85,22 +83,5 @@
   <string name="lang_code_el" translatable="false">el</string>
   <!-- CHAR LIMIT: 15 -->
   <string name="about_menu_item">About</string>
-
-  <!-- AboutDialog -->
-  <string name="crowdin_comment_break_strings_5" translatable="false">Crowdin comment break</string>
-  <string name="email_address" translatable="false">mirfatif.dev@gmail.com</string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="email">Email</string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="telegram_group">Telegram Group</string>
-  <string name="telegram_link" translatable="false">https://t.me/MyLocationApp</string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="source">Source</string>
-  <string name="source_url" translatable="false">https://github.com/mirfatif/MyLocation</string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="update">Update</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="update_summary">Check for app updates</string>
-  <string name="release_url" translatable="false">https://github.com/mirfatif/MyLocation/releases</string>
 
 </resources>

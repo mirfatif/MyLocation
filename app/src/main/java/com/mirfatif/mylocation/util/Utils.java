@@ -52,6 +52,8 @@ public class Utils {
 
   private Utils() {}
 
+  public static final String GITHUB_URL = "https://github.com/mirfatif/MyLocation";
+
   public static String getString(int resId, Object... args) {
     return App.getCxt().getString(resId, args);
   }
@@ -136,20 +138,6 @@ public class Utils {
 
     showToast(R.string.no_browser_installed);
     return true;
-  }
-
-  public static void sendMail(Activity activity, String body) {
-    Intent emailIntent = new Intent(Intent.ACTION_SENDTO).setData(Uri.parse("mailto:"));
-    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {getString(R.string.email_address)});
-    emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-    if (body != null) {
-      emailIntent.putExtra(Intent.EXTRA_TEXT, body);
-    }
-    try {
-      activity.startActivity(emailIntent);
-    } catch (ActivityNotFoundException e) {
-      showToast(R.string.no_email_app_installed);
-    }
   }
 
   private static final DecimalFormat sLatLngFormat = new DecimalFormat();

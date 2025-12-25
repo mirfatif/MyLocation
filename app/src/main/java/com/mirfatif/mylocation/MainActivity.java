@@ -7,6 +7,7 @@ import static android.os.Build.VERSION.SDK_INT;
 import static com.mirfatif.mylocation.GpsSvc.ACTION_STOP_SERVICE;
 import static com.mirfatif.mylocation.GpsSvc.MIN_DELAY;
 import static com.mirfatif.mylocation.MySettings.SETTINGS;
+import static com.mirfatif.mylocation.util.Utils.GITHUB_URL;
 import static com.mirfatif.mylocation.util.Utils.copyLoc;
 import static com.mirfatif.mylocation.util.Utils.hasCoarseLocPerm;
 import static com.mirfatif.mylocation.util.Utils.hasFineLocPerm;
@@ -233,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
       return true;
     }
     if (itemId == R.id.action_about) {
-      AboutDialogFragment.show(this);
+      Utils.openWebUrl(this, GITHUB_URL);
       return true;
     }
     return super.onOptionsItemSelected(item);

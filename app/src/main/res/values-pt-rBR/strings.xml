@@ -26,8 +26,6 @@
   <string name="satellites_count">Satélites Total: %1$d, Bom: %2$d, Fixos: %3$d</string>
   <string name="location">Latitude: %1$s, Longitude: %2$s, Precisão: %3$s m</string>
   <!-- CHAR LIMIT: 20 -->
-  <string name="no_email_app_installed">Nenhum app de e-mail</string>
-  <!-- CHAR LIMIT: 20 -->
   <string name="no_browser_installed">Nenhum navegador web</string>
   <!-- CHAR LIMIT: 20 -->
   <string name="no_maps_installed">Nenhum app de mapas</string>
@@ -58,15 +56,4 @@
   <string name="lang_el_menu_item">Grego</string>
   <!-- CHAR LIMIT: 15 -->
   <string name="about_menu_item">Sobre</string>
-  <!-- AboutDialog -->
-  <!-- CHAR LIMIT: 15 -->
-  <string name="email">E-mail</string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="telegram_group">Grupo no Telegram</string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="source">Fonte</string>
-  <!-- CHAR LIMIT: 15 -->
-  <string name="update">Atualizar</string>
-  <!-- CHAR LIMIT: 20 -->
-  <string name="update_summary">Verificar por atualizações do App</string>
 </resources>
