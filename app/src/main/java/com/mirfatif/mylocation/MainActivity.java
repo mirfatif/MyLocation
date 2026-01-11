@@ -328,7 +328,9 @@ public class MainActivity extends AppCompatActivity {
 
     Utils.setTooltip(mB.nlpCont.download);
     mB.nlpCont.download.setOnClickListener(
-        v -> Utils.openWebUrl(this, "https://github.com/microg/UnifiedNlp/wiki/Backends"));
+        v ->
+            Utils.openWebUrl(
+                this, "https://github.com/mirfatif/MyLocation/blob/master/nlp-backends.md"));
 
     mB.nlpCont.switchV.setOnClickListener(
         v -> {

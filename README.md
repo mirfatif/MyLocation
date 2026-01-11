@@ -18,9 +18,14 @@ My Location finds your device's location in the following ways:
 * <b>GPS</b> is usually the most accurate method. But a position fix may take some time or may not work at all due to signal loss. <b>Lock GPS</b> feature runs a persistent service to keep connected with the satellites.
 
   You can also see the list of visible **satellites** with their PRNs (unique identifiers) and SNR (signal quality). Pro version shows extra telemetry including satellite name, angles and frequency bands.
- 
-* <b>Network Location Provider</b> uses Wi-Fi or Cellular ids to estimate the location. On the devices with Google Play Services installed, NLP usually uses Google Location Service at backend.
-* <b>UnifiedNLP</b> is an open source API which has been used to develop multiple [NLP backends](https://github.com/microg/UnifiedNlp/wiki/Backends).
+
+  See [documentation](https://developer.android.com/reference/android/location/LocationManager#GPS_PROVIDER).
+
+* <b>Network Location Provider</b> uses Wi-Fi, Bluetooth, cellular ids or other on-device sensors to estimate the location. On the devices with Google Play Services installed, NLP usually uses Google Location Service at backend.
+
+  See [documentation](https://developer.android.com/reference/android/location/LocationManager#NETWORK_PROVIDER).
+
+* <b>UnifiedNLP</b> is an open source API which has been used to develop multiple ~~[NLP backends](https://github.com/microg/UnifiedNlp/wiki/Backends)~~ [NLP backends](https://github.com/mirfatif/MyLocation/blob/master/nlp-backends.md).
 
 Furthermore:
 

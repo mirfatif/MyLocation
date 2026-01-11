@@ -8,7 +8,7 @@ You can also see the list of visible satellites with their PRNs (unique identifi
 
 <b>-</b> <b>Network Location Provider</b> uses Wi-Fi or Cellular ids to estimate the location. On the devices with Google Play Services installed, NLP usually uses Google Location Service at backend.
 
-<b>-</b> <b>UnifiedNLP</b> is an open source API which has been used to develop multiple NLP backends (https://github.com/microg/UnifiedNlp/wiki/Backends).
+<b>-</b> <b>UnifiedNLP</b> is an open source API which has been used to develop multiple NLP backends (https://github.com/mirfatif/MyLocation/blob/master/nlp-backends.md).
 
 <b>Furthermore:</b>
 <b>-</b> Location coordinates can be copied to clipboard or opened in a maps app, if installed.
