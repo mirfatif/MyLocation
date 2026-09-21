@@ -30,9 +30,11 @@ My Location finds your device's location in the following ways:
 Furthermore:
 
 * Location coordinates can be copied to clipboard or opened in a maps app, if installed.
-* Pro version has a `-map` variant which includes a built-in **map preview** using OpenStreetMap.
-* Pro version also has a minimal **compass**.
 * Clearing A-GPS aiding data is also supported.
+* Pro features:
+  - `-map` variant includes a built-in **map preview** using OpenStreetMap.
+  - A minimal **compass**.
+  - Optional reverse geocoding i.e. get a name for your location.
 
 <b>Note</b> that My Location is not a location provider like UnifiedNLP (or microG GmsCore). It just shows the location information received from AOSP location providers (GPS and Network) or directly from UnifiedNLP Backends (whichever are available on the device).
 
